@@ -1,0 +1,8 @@
+{
+  "vetur.format.enable": false,
+  "vetur.validation.template": false,
+  "vetur.validation.style": false,
+  "vetur.validation.script": false,
+  "vetur.validation.interpolation": false,
+  "vetur.underline.refValue": false
+}

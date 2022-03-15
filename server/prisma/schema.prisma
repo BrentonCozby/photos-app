@@ -1,0 +1,20 @@
+// run `npx prisma generate` with every change in order to update the Prisma Client
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Photo {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(128)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  url         String   @db.VarChar(255)
+  description String   @db.VarChar(255)
+  contentHash String   @db.VarChar(32)
+}
