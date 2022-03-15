@@ -14,12 +14,24 @@ const {
 
 let photos = ref([])
 
+// GET many (all)
 fetch(`http://${HOST}:${PORT}/photos`)
 .then((r) => r.json())
 .then((response) => {
   photos.value = Serializer.deserialize('photo', response)
 })
+
+// POST one
+// fetch(`http://${HOST}:${PORT}/photos`, {
+//   method: 'POST',
+//   body: JSON.stringify({ name: 'zebra', description: 'a zebra', url: 'photourl.com/5' }),
+//   headers: { "Content-Type": "application/json" },
+// })
+
+// DELETE one
 // fetch(`http://${HOST}:${PORT}/photos/3`, { method: 'DELETE' })
+
+// GET one
 fetch(`http://${HOST}:${PORT}/photos/4`)
 </script>
 
