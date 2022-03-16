@@ -29,10 +29,10 @@ fetch(`http://${HOST}:${PORT}/photos`)
 // })
 
 // DELETE one
-// fetch(`http://${HOST}:${PORT}/photos/3`, { method: 'DELETE' })
+fetch(`http://${HOST}:${PORT}/photos/4`, { method: 'DELETE' })
 
 // GET one
-fetch(`http://${HOST}:${PORT}/photos/4`)
+fetch(`http://${HOST}:${PORT}/photos/5`)
 </script>
 
 <template>
