@@ -1,26 +1,36 @@
 import { prisma } from '@/db'
 import JSONAPISerializer from 'json-api-serializer'
-import { makePhoto } from '@/entities'
 import { IPhoto } from '@/types'
+import { RequiredError, ValidationError } from '@/errors'
+import { isEmpty } from 'lodash'
 
-const editOne = async ({
+export const editOne = async ({
   id,
-  name,
-  description,
-  url,
+  data,
 }: {
   id: IPhoto['id']
-  name: IPhoto['name']
-  description: IPhoto['description']
-  url: IPhoto['url']
+  data: {
+    description?: IPhoto['description']
+    name?: IPhoto['name']
+    url?: IPhoto['url']
+  }
 }) => {
-  const newPhoto = makePhoto({ name, description, url })
+  if (!id) {
+    throw new RequiredError({ fieldName: 'id', value: id })
+  }
+
+  if (isEmpty(data)) {
+    throw new ValidationError({ fieldName: 'data', value: data, message: 'Cannot be empty' })
+  }
 
   const dbResponse = await prisma.photo.update({
     where: {
       id,
     },
-    data: newPhoto,
+    data: {
+      ...data,
+      updatedAt: new Date(),
+    },
   })
 
   const Serializer = new JSONAPISerializer()
@@ -28,8 +38,4 @@ const editOne = async ({
   Serializer.register('photo')
 
   return Serializer.serialize('photo', dbResponse)
-}
-
-export {
-  editOne,
 }

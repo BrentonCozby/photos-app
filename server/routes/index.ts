@@ -16,6 +16,10 @@ router.post(
   '/photos',
   toExpressHandler(photosControllers.postOnePhoto),
 )
+router.patch(
+  '/photos/:id',
+  toExpressHandler(photosControllers.editOnePhoto),
+)
 router.delete(
   '/photos/:id',
   toExpressHandler(photosControllers.deleteOnePhoto),

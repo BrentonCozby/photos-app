@@ -3,7 +3,7 @@ import JSONAPISerializer from 'json-api-serializer'
 import { makePhoto } from '@/entities'
 import { IPhoto } from '@/types'
 
-const addOne = async ({
+export const addOne = async ({
   name,
   description,
   url,
@@ -19,12 +19,8 @@ const addOne = async ({
   })
 
   const Serializer = new JSONAPISerializer()
-  
+
   Serializer.register('photo')
 
   return Serializer.serialize('photo', dbResponse)
-}
-
-export {
-  addOne,
 }

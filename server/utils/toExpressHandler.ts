@@ -1,6 +1,5 @@
 import { Controller, IHttpRequest } from '@/types'
 import express from 'express'
-import statuses from 'statuses'
 
 type toExpressHandlerType = (controller: Controller) => express.Handler
 
@@ -28,7 +27,7 @@ export const toExpressHandler: toExpressHandlerType = (controller) => {
       console.error(error)
 
       return res
-        .status(Number(statuses('Internal Server Error')))
+        .status(500)
         .send({ error: 'An unkown error occurred.' })
     }
 

@@ -14,25 +14,43 @@ const {
 
 let photos = ref([])
 
-// GET many (all)
-fetch(`http://${HOST}:${PORT}/photos`)
-.then((r) => r.json())
-.then((response) => {
-  photos.value = Serializer.deserialize('photo', response)
-})
+async function main() {
+  // GET many (all)
+  fetch(`http://${HOST}:${PORT}/photos`)
+  .then((r) => r.json())
+  .then((response) => {
+    photos.value = Serializer.deserialize('photo', response)
+  })
 
-// POST one
-// fetch(`http://${HOST}:${PORT}/photos`, {
-//   method: 'POST',
-//   body: JSON.stringify({ name: 'zebra', description: 'a zebra', url: 'photourl.com/1' }),
-//   headers: { "Content-Type": "application/json" },
-// })
+  // GET one
+  // fetch(`http://${HOST}:${PORT}/photos/5`)
 
-// DELETE one
-// fetch(`http://${HOST}:${PORT}/photos/cl0ubhrbn00010wo61qxe979n`, { method: 'DELETE' })
+  // POST one
+  // fetch(`http://${HOST}:${PORT}/photos`, {
+  //   method: 'POST',
+  //   body: JSON.stringify({ name: 'zebra', description: 'a zebra', url: 'photourl.com/1' }),
+  //   headers: { "Content-Type": "application/json" },
+  // })
 
-// GET one
-// fetch(`http://${HOST}:${PORT}/photos/5`)
+  // PATCH one
+  // await fetch(`http://${HOST}:${PORT}/photos/cl0vba2cx0000cbpeapt9a4ig`, {
+  //   method: 'PATCH',
+  //   body: JSON.stringify({
+  //     oldValues: {
+  //       description: 'a bar zebra',
+  //     },
+  //     newValues: {
+  //       description: 'a small zebra',
+  //     }
+  //   }),
+  //   headers: { "Content-Type": "application/json" },
+  // })
+
+  // DELETE one
+  // fetch(`http://${HOST}:${PORT}/photos/cl0ubhrbn00010wo61qxe979n`, { method: 'DELETE' })
+}
+
+main()
 </script>
 
 <template>

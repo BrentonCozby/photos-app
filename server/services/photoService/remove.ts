@@ -1,7 +1,7 @@
 import { prisma } from '@/db'
 import JSONAPISerializer from 'json-api-serializer'
 
-const removeOne = async ({
+export const removeOne = async ({
   id,
 }: {
   id: string
@@ -17,8 +17,4 @@ const removeOne = async ({
   Serializer.register('photo')
 
   return Serializer.serialize('photo', dbResponse)
-}
-
-export {
-  removeOne,
 }
