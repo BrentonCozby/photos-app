@@ -1,4 +1,4 @@
-import photoService from './photos'
+import photoService from './photoService'
 
 export {
   photoService,

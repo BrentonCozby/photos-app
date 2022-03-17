@@ -8,12 +8,12 @@ const removeOne = async ({
 }) => {
   const dbResponse = await prisma.photo.delete({
     where: {
-      id: Number(id),
+      id: id,
     },
   })
 
   const Serializer = new JSONAPISerializer()
-  
+
   Serializer.register('photo')
 
   return Serializer.serialize('photo', dbResponse)
