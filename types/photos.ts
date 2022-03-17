@@ -1,19 +1,8 @@
-export interface IPhotoNew {
-  contentHash?: string
-  createdAt?: string
-  description: string
-  id?: string
-  name: string
-  updatedAt?: string
-  url: string
-}
-
 export interface IPhoto {
-  contentHash: string
-  createdAt: string
+  createdAt: Date | string
   description: string
   id: string
   name: string
-  updatedAt: string
+  updatedAt: Date | string
   url: string
 }

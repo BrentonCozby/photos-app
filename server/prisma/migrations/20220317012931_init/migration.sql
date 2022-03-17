@@ -1,7 +1,8 @@
 -- CreateTable
 CREATE TABLE "Photo" (
-    "id" SERIAL NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "id" TEXT NOT NULL,
+    "name" VARCHAR(128) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "url" VARCHAR(255) NOT NULL,
     "description" VARCHAR(255) NOT NULL,

@@ -24,15 +24,15 @@ fetch(`http://${HOST}:${PORT}/photos`)
 // POST one
 // fetch(`http://${HOST}:${PORT}/photos`, {
 //   method: 'POST',
-//   body: JSON.stringify({ name: 'zebra', description: 'a zebra', url: 'photourl.com/5' }),
+//   body: JSON.stringify({ name: 'zebra', description: 'a zebra', url: 'photourl.com/1' }),
 //   headers: { "Content-Type": "application/json" },
 // })
 
 // DELETE one
-fetch(`http://${HOST}:${PORT}/photos/4`, { method: 'DELETE' })
+// fetch(`http://${HOST}:${PORT}/photos/cl0ubhrbn00010wo61qxe979n`, { method: 'DELETE' })
 
 // GET one
-fetch(`http://${HOST}:${PORT}/photos/5`)
+// fetch(`http://${HOST}:${PORT}/photos/5`)
 </script>
 
 <template>

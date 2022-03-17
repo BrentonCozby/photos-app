@@ -1,16 +1,26 @@
-import { sanitizeText, sanitizeUrl, md5 } from '@/utils'
-import { RequiredError } from '@/errors'
-import { IPhotoNew } from '@/types'
+import { sanitizeText, sanitizeUrl } from '@/utils'
+import { RequiredError, ValidationError } from '@/errors'
+import { IPhoto } from '@/types'
+import { createId, isValidId } from '@/utils'
+
+interface IArgs extends Partial<IPhoto> {
+  description: IPhoto['description']
+  name: IPhoto['name']
+  url: IPhoto['url']
+}
 
 export function makePhoto({
-  contentHash,
   createdAt = '',
   description,
-  id = '',
+  id = createId(),
   name,
   updatedAt = '',
   url,
-}: IPhotoNew) {
+}: IArgs) {
+  if (id && !isValidId(id)) {
+    throw new ValidationError({ fieldName: 'id', value: id, message: 'Must be a cuid' })
+  }
+
   if (!url || !String(url).trim()) {
     throw new RequiredError({ fieldName: 'url', value: url })
   }
@@ -23,23 +33,14 @@ export function makePhoto({
     throw new RequiredError({ fieldName: 'description', value: description })
   }
 
-  const newPhoto: any = {
-    contentHash: contentHash || md5(id + createdAt + updatedAt + url + description),
+  const timestamp = new Date()
+  const newPhoto: IPhoto = {
+    createdAt: createdAt || timestamp,
     description: sanitizeText(description),
+    id: id,
     name: sanitizeText(name),
+    updatedAt: updatedAt || timestamp,
     url: sanitizeUrl(url),
-  }
-
-  if (id) {
-    newPhoto.id = id
-  }
-
-  if (createdAt) {
-    newPhoto.createdAt = createdAt
-  }
-
-  if (updatedAt) {
-    newPhoto.updatedAt = updatedAt
   }
 
   return Object.freeze(newPhoto)

@@ -32,6 +32,7 @@
     "@types/statuses": "^2.0.0",
     "@types/stoppable": "^1.1.1",
     "cors": "^2.8.5",
+    "cuid": "^2.1.8",
     "dotenv-cli": "^5.0.0",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.3",

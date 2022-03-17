@@ -1,6 +1,5 @@
 import { makePhoto } from './photo'
 import { RequiredError } from '@/errors'
-import { md5 } from '@/utils'
 
 describe('makePhoto', () => {
   it('returns a frozen photo object', () => {
@@ -73,10 +72,5 @@ describe('makePhoto', () => {
     
     expect(photo.name).toBe('<b>foo</b>')
     expect(photo.description).toBe('a photo &lt;script&gt;doSomeEvil()&lt;/script&gt;')
-  })
-
-  it('creates a contentHash if none is provided', () => {
-    const data = { url: 'foo.com/1', description: 'a photo', name: 'foo' }
-    expect(makePhoto(data)).toEqual(expect.objectContaining({ contentHash: md5(data.url + data.description) }))
   })
 })
