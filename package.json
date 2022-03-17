@@ -16,7 +16,11 @@
   },
   "homepage": "https://github.com/BrentonCozby/photos-app#readme",
   "files": [
-    "types"
+    "types",
+    "httpStatuses.ts",
+    ".eslintrc.js",
+    "tsconfig.json",
+    ".env"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.14.0",
