@@ -23,7 +23,7 @@ services:
     ports:
       - '${SERVER_PORT}:3000'
       - '9229:9229'
-    depends_on: 
+    depends_on:
       - db
   spa:
     container_name: photos_app.spa
@@ -31,12 +31,12 @@ services:
       context: ./spa
       dockerfile: Dockerfile.dev
     ports:
-      - '8022:8022'
+      - '${VITE_PORT}:8022'
     volumes:
       - .:/usr/src:delegated
       - spa_node_modules:/usr/src/spa/node_modules
       - server_tmp:/tmp # for jest cache
-    depends_on: 
+    depends_on:
       - server
 
 volumes:
