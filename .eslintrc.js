@@ -14,8 +14,8 @@ module.exports = {
 
   parserOptions: {
     project: './tsconfig.json',
-    ecmaVersion: "latest", // Allows the use of modern ECMAScript features
-    sourceType: "module", // Allows for the use of imports
+    ecmaVersion: 'latest', // Allows the use of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
   },
 
   env: {
@@ -31,14 +31,15 @@ module.exports = {
   rules: {
     // off
     'import/prefer-default-export': 'off',
-    "indent": "off",
-    
+    'indent': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+
     // warning
     'no-console': 'warn',
     '@typescript-eslint/no-unused-vars': 'warn',
-    
+
     // on
-    '@typescript-eslint/indent': ['error', 2], // in place of "indent"
+    '@typescript-eslint/indent': ['error', 2], // in place of 'indent'
     'comma-dangle': ['error', 'always-multiline'],
     'object-curly-spacing': ['error', 'always'],
     'quotes': ['error', 'single'],
