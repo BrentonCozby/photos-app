@@ -1,5 +1,16 @@
 version: '3'
 services:
+  db:
+    container_name: photos_app.db
+    image: postgres:14.2
+    ports:
+      - '${DB_PORT}:5432'
+    environment:
+      - 'POSTGRES_USER=${POSTGRES_USER}'
+      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
+      - 'POSTGRES_DB=${POSTGRES_DB_NAME}'
+    volumes:
+      - photos_app_db:/var/lib/postgresql/data
   server:
     container_name: photos_app.server
     build:
@@ -14,19 +25,22 @@ services:
       - '9229:9229'
     depends_on: 
       - db
-  db:
-    container_name: photos_app.db
-    image: postgres:14.2
+  spa:
+    container_name: photos_app.spa
+    build:
+      context: ./spa
+      dockerfile: Dockerfile.dev
     ports:
-      - '${DB_PORT}:5432'
-    environment:
-      - 'POSTGRES_USER=${POSTGRES_USER}'
-      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
-      - 'POSTGRES_DB=${POSTGRES_DB_NAME}'
+      - '8022:8022'
     volumes:
-      - photos_app_db:/var/lib/postgresql/data
+      - .:/usr/src:delegated
+      - spa_node_modules:/usr/src/spa/node_modules
+      - server_tmp:/tmp # for jest cache
+    depends_on: 
+      - server
 
 volumes:
   photos_app_db:
   server_node_modules:
+  spa_node_modules:
   server_tmp:

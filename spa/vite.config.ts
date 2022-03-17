@@ -16,6 +16,7 @@ export default ({ mode }) => {
     ],
 
     server: {
+      host: true,
       // @ts-expect-error "need to install @types/node"
       port: process.env.VITE_SPA_PORT,
     },

@@ -1,0 +1,15 @@
+FROM node:16.4-slim
+
+WORKDIR /usr/src/spa
+
+ENV NODE_ENV=development
+
+COPY ./package*.json ./
+RUN \
+  NODE_ENV=development && \
+  npm ci && \
+  npm cache clean --force
+
+COPY ./ ./
+
+CMD [ "npm", "run", "dev" ]
