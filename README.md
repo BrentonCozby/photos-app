@@ -29,3 +29,4 @@ docker logs -f photos_app.spa
 
 * https://viralganatra.com/docker-nodejs-production-secure-best-practices/#node-images-and-version-pinning
 * https://github.com/dev-mastery/comments-api
+  * Video: [Using Clean Architecture for Microservice APIs in Node.js with MongoDB and Express](https://www.youtube.com/watch?v=CnailTcJV_U)
