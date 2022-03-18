@@ -1,8 +1,8 @@
 import { IJsonError } from '@/types'
 import { IErrorOptions } from './types'
-import { JsonApiError } from './base'
+import { BasicError } from './base'
 
-export class ValidationError extends JsonApiError {
+export class ValidationError extends BasicError {
   name: string
 
   constructor({
@@ -35,7 +35,7 @@ export class ValidationError extends JsonApiError {
   }
 }
 
-export class RequiredError extends JsonApiError {
+export class RequiredError extends BasicError {
   name: string
 
   constructor({
@@ -66,7 +66,7 @@ export class RequiredError extends JsonApiError {
   }
 }
 
-export class NotFoundError extends JsonApiError {
+export class NotFoundError extends BasicError {
   name: string
 
   constructor({
@@ -95,7 +95,7 @@ export class NotFoundError extends JsonApiError {
   }
 }
 
-export class StaleDataError extends JsonApiError {
+export class StaleDataError extends BasicError {
   name: string
 
   constructor({

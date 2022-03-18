@@ -1,7 +1,7 @@
 import { IErrorOptions } from '@/errors/types'
 import { IJsonError } from '@/types'
 
-export class JsonApiError extends Error {
+export class BasicError extends Error {
   name: string
   code: string
   source?: IJsonError['source']
