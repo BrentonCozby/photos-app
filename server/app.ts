@@ -2,16 +2,20 @@ import path from 'path'
 import express from 'express'
 import cors from 'cors'
 import 'express-async-errors'
+import helmet from 'helmet'
 import { router } from '@/routes'
 import { IS_PROD } from '@/constants'
 
 async function createApp() {
   const app = express()
-  
+
+  app.use(helmet({
+    contentSecurityPolicy: false,
+  })) // https://github.com/helmetjs/helmet
   app.use(express.json())
   app.use(cors())
   app.use(router)
-  
+
   if (IS_PROD) {
     app.use(express.static(path.resolve(__dirname, '..', 'spa', 'dist')))
 
