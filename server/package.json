@@ -18,7 +18,7 @@
   },
   "author": "Brenton Cozby",
   "engines": {
-    "node": "^14 || ^16"
+    "node": "^16"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^6.0.0",
