@@ -1,11 +1,11 @@
 import { IErrorOptions } from '@/errors/types'
-import { IJsonError } from '@/types'
+import { I_JsonError } from '@/types'
 
 export class BasicError extends Error {
   name: string
   code: string
-  source?: IJsonError['source']
-  meta?: IJsonError['meta']
+  source?: I_JsonError['source']
+  meta?: I_JsonError['meta']
 
   constructor({
     code,
@@ -17,8 +17,8 @@ export class BasicError extends Error {
     code: string
     message: string
     options?: IErrorOptions
-    source?: IJsonError['source']
-    meta?: IJsonError['meta']
+    source?: I_JsonError['source']
+    meta?: I_JsonError['meta']
   }) {
     super(message, options)
 

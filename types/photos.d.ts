@@ -1,4 +1,4 @@
-export interface IPhoto {
+export interface I_Photo {
   createdAt: Date | string
   description: string
   id: string

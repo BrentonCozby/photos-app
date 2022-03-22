@@ -1,12 +1,12 @@
 import { sanitizeText, sanitizeUrl } from '@/utils'
 import { RequiredError, ValidationError } from '@/errors'
-import { IPhoto } from '@/types'
+import { I_Photo } from '@/types'
 import { createId, isValidId } from '@/utils'
 
-interface IArgs extends Partial<IPhoto> {
-  description: IPhoto['description']
-  name: IPhoto['name']
-  url: IPhoto['url']
+interface IArgs extends Partial<I_Photo> {
+  description: I_Photo['description']
+  name: I_Photo['name']
+  url: I_Photo['url']
 }
 
 export function makePhoto({
@@ -34,7 +34,7 @@ export function makePhoto({
   }
 
   const timestamp = new Date()
-  const newPhoto: IPhoto = {
+  const newPhoto: I_Photo = {
     createdAt: createdAt || timestamp,
     description: sanitizeText(description),
     id: id,

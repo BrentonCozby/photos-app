@@ -1,24 +1,24 @@
 export * from '@/../types'
 
 
-export interface IHttpHeaders {
-  [key: string]: string | undefined
+export interface I_HttpHeaders {
+  [key: string]: string | string[] | undefined
 }
 
-export interface IHttpRequest<B = any> {
+export interface I_HttpRequest<B = any> {
   method: string
   ip: string
   path: string
-  headers: IHttpHeaders
+  headers: I_HttpHeaders
   query: Record<string, any>
   pathParams: Record<string, string>
   body?: B
 }
 
-export interface IHttpResponse<B = any> {
-  headers: IHttpHeaders
+export interface I_HttpResponse<B = any> {
+  headers: I_HttpHeaders
   status: string | number
   body?: B
 }
 
-export type Controller<Q = any, P = any> = (request: IHttpRequest<Q>) => Promise<IHttpResponse<P>>
+export type T_Controller<Q = any, P = any> = (request: I_HttpRequest<Q>) => Promise<I_HttpResponse<P>>

@@ -1,4 +1,4 @@
-import { IJsonError } from '@/types'
+import { I_JsonError } from '@/types'
 import { IErrorOptions } from './types'
 import { BasicError } from './base'
 
@@ -17,8 +17,8 @@ export class ValidationError extends BasicError {
     value: unknown
     message: string
     options?: IErrorOptions
-    meta?: IJsonError['meta']
-    source?: IJsonError['source']
+    meta?: I_JsonError['meta']
+    source?: I_JsonError['source']
   }) {
     super({
       code: 'PAE-1',
@@ -48,8 +48,8 @@ export class RequiredError extends BasicError {
     fieldName: string
     value: unknown
     options?: IErrorOptions
-    meta?: IJsonError['meta']
-    source?: IJsonError['source']
+    meta?: I_JsonError['meta']
+    source?: I_JsonError['source']
   }) {
     super({
       code: 'PAE-2',
@@ -78,7 +78,7 @@ export class NotFoundError extends BasicError {
     message?: string
     options?: IErrorOptions
     meta?: Record<string, string>
-    source?: IJsonError['source']
+    source?: I_JsonError['source']
   } = {}) {
     super({
       code: 'PAE-3',
@@ -109,7 +109,7 @@ export class StaleDataError extends BasicError {
     staleField?: string
     options?: IErrorOptions
     meta?: Record<string, string>
-    source?: IJsonError['source']
+    source?: I_JsonError['source']
   } = {}) {
     super({
       code: 'PAE-4',

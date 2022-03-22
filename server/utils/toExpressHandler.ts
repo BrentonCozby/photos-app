@@ -1,11 +1,11 @@
-import { Controller, IHttpRequest } from '@/types'
+import { T_Controller, I_HttpRequest } from '@/types'
 import express from 'express'
 
-type toExpressHandlerType = (controller: Controller) => express.Handler
+type toExpressHandlerType = (controller: T_Controller) => express.Handler
 
 export const toExpressHandler: toExpressHandlerType = (controller) => {
   return async (req, res) => {
-    const httpRequest: IHttpRequest = {
+    const httpRequest: I_HttpRequest = {
       body: req.body,
       query: req.query,
       pathParams: req.params,

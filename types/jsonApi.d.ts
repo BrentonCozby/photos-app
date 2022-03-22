@@ -9,24 +9,24 @@
  * The base data structure for a JSON api response
  * @see https://jsonapi.org/format/#document-structure
  */
-export interface IJsonDocument {
-  data?: IJsonResource | IJsonResource[]
-  errors?: IJsonError[]
-  meta?: IJsonMeta
+export interface I_JsonDocument {
+  data?: I_JsonResource | I_JsonResource[]
+  errors?: I_JsonError[]
+  meta?: I_JsonMeta
   jsonapi?: {
     version?: string
-    meta?: IJsonMeta
+    meta?: I_JsonMeta
   }
-  links?: IJsonLinks
-  included?: IJsonResource[]
+  links?: I_JsonLinks
+  included?: I_JsonResource[]
 }
 
 
 /**
  * Contains a list of errors
  */
-export interface IJsonErrorDocument extends IJsonDocument {
-  errors: IJsonError[],
+export interface I_JsonErrorDocument extends I_JsonDocument {
+  errors: I_JsonError[],
 }
 
 
@@ -34,13 +34,13 @@ export interface IJsonErrorDocument extends IJsonDocument {
  * A resource object
  * @see https://jsonapi.org/format/#document-resource-objects
  */
-export interface IJsonResource {
+export interface I_JsonResource {
   id?: string
   type: string
-  attributes?: IJsonAttributes
-  relationships?: IJsonRelationships
-  links?: IJsonLinks
-  meta?: IJsonMeta
+  attributes?: I_JsonAttributes
+  relationships?: I_JsonRelationships
+  links?: I_JsonLinks
+  meta?: I_JsonMeta
 }
 
 
@@ -49,9 +49,9 @@ export interface IJsonResource {
  * @see https://jsonapi.org/format/#error-objects
  * @see https://jsonapi.org/examples/#error-objects
  */
-export interface IJsonError {
+export interface I_JsonError {
   id?: string
-  links?: IJsonLinks
+  links?: I_JsonLinks
   status?: string
   code?: string
   title?: string
@@ -60,7 +60,7 @@ export interface IJsonError {
     pointer?: string
     parameter?: string
   }
-  meta?: IJsonMeta
+  meta?: I_JsonMeta
 }
 
 
@@ -68,7 +68,7 @@ export interface IJsonError {
  * An attributes object
  * @see https://jsonapi.org/format/#document-resource-object-attributes
  */
-export interface IJsonAttributes<T = unknown> {
+export interface I_JsonAttributes<T = unknown> {
   [key: string]: Partial<T>
 }
 
@@ -77,10 +77,10 @@ export interface IJsonAttributes<T = unknown> {
  * A relationships object
  * @see https://jsonapi.org/format/#document-resource-object-relationships
  */
-export interface IJsonRelationships {
-  links?: IJsonLinks
-  data?: IJsonResource
-  meta?: IJsonMeta
+export interface I_JsonRelationships {
+  links?: I_JsonLinks
+  data?: I_JsonResource
+  meta?: I_JsonMeta
 }
 
 
@@ -88,11 +88,11 @@ export interface IJsonRelationships {
  * A links object
  * @see https://jsonapi.org/format/#document-links
  */
-export interface IJsonLinks {
+export interface I_JsonLinks {
   self?: string
   related?: {
     href: string
-    meta: IJsonMeta
+    meta: I_JsonMeta
   }
 }
 
@@ -101,7 +101,7 @@ export interface IJsonLinks {
  * A meta object
  * @see https://jsonapi.org/format/#document-meta
  */
-export interface IJsonMeta<T = unknown> {
+export interface I_JsonMeta<T = unknown> {
   [key: string]: Partial<T>
 }
 

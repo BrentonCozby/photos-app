@@ -1,16 +1,16 @@
 import { prisma } from '@/db'
 import JSONAPISerializer from 'json-api-serializer'
 import { makePhoto } from '@/entities'
-import { IPhoto } from '@/types'
+import { I_Photo } from '@/types'
 
 export const addOne = async ({
   name,
   description,
   url,
 }: {
-  name: IPhoto['name']
-  description: IPhoto['description']
-  url: IPhoto['url']
+  name: I_Photo['name']
+  description: I_Photo['description']
+  url: I_Photo['url']
 }) => {
   const newPhoto = makePhoto({ name, description, url })
 

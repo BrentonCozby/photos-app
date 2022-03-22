@@ -1,6 +1,6 @@
 import { prisma } from '@/db'
 import JSONAPISerializer from 'json-api-serializer'
-import { IPhoto } from '@/types'
+import { I_Photo } from '@/types'
 
 export const getOne = async ({
   id,
@@ -31,12 +31,12 @@ export const getMany = async ({
 
   const Serializer = new JSONAPISerializer()
 
-  interface IExtraData {
+  interface I_ExtraData {
     limit: number
   }
 
   Serializer.register('photo', {
-    topLevelMeta: (data: IPhoto[], extraData: IExtraData) => {
+    topLevelMeta: (data: I_Photo[], extraData: I_ExtraData) => {
       return {
         count: data.length,
         limit: extraData.limit,
