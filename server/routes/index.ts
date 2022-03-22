@@ -1,29 +1,13 @@
 import express from 'express'
-import { toExpressHandler } from '@/utils'
-import * as photosControllers from '@/controllers/photos'
+import * as photos from '@/controllers/photos'
 
 const router = express.Router()
 
-router.get(
-  '/photos',
-  toExpressHandler(photosControllers.getManyPhotos),
-)
-router.get(
-  '/photos/:id',
-  toExpressHandler(photosControllers.getOnePhoto),
-)
-router.post(
-  '/photos',
-  toExpressHandler(photosControllers.postOnePhoto),
-)
-router.patch(
-  '/photos/:id',
-  toExpressHandler(photosControllers.editOnePhoto),
-)
-router.delete(
-  '/photos/:id',
-  toExpressHandler(photosControllers.deleteOnePhoto),
-)
+router.get('/photos', photos.getMany)
+router.get('/photos/:id', photos.getOne)
+router.post('/photos', photos.post)
+router.patch('/photos/:id', photos.patchOne)
+router.delete('/photos/:id', photos.deleteOne)
 
 export {
   router,
