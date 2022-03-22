@@ -1,0 +1,26 @@
+import { auth } from 'express-oauth2-jwt-bearer'
+import { T_ExpressHandler } from '@/types'
+
+/**
+ * Attempts to verify an access token in the request.
+ * Until `authService.init()` is called, this function does nothing.
+ */
+let verifyAccessToken: T_ExpressHandler = (req, res, next) => {
+  next()
+}
+
+/**
+ * Initializes the authService.
+ * Wait to call this function after all the `process.env` variables are available.
+ */
+const init = () => {
+  verifyAccessToken = auth({
+    issuerBaseURL: String(process.env.AUTH0_DOMAIN),
+    audience: String(process.env.AUTH0_PHOTOS_API_AUD),
+  })
+}
+
+export default {
+  init,
+  verifyAccessToken,
+}

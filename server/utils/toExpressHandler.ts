@@ -12,11 +12,7 @@ export const toExpressHandler: toExpressHandlerType = (controller) => {
       ip: req.ip,
       method: req.method,
       path: req.path,
-      headers: {
-        'Content-Type': req.get('Content-Type'),
-        Referer: req.get('referer'),
-        'User-Agent': req.get('User-Agent'),
-      },
+      headers: req.headers,
     }
 
     let httpResponse

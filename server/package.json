@@ -37,6 +37,7 @@
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.3",
     "express-async-errors": "^3.1.1",
+    "express-oauth2-jwt-bearer": "^1.1.0",
     "helmet": "^5.0.2",
     "json-api-serializer": "^2.6.6",
     "lodash": "^4.17.21",

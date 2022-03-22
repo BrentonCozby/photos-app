@@ -1,5 +1,8 @@
+import express from 'express'
+
 export * from '@/../types'
 
+export type T_ExpressHandler = express.Handler
 
 export interface I_HttpHeaders {
   [key: string]: string | string[] | undefined
