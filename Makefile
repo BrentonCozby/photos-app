@@ -4,6 +4,10 @@ bash:
 	@echo "Starting Photos App shell..."
 	docker exec -it photos_app.server /bin/bash
 
+logs:
+	@echo "Following all container logs..."
+	docker-compose logs -f --tail=0
+
 lint:
 	@echo "Linting Photos App..."
 	docker-compose run --rm server sh -c 'npm run lint'
