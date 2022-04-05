@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import { useAuth0 } from '@auth0/auth0-vue'
-import { useGetPhotos } from './composables'
+import { useAuthService, useGetPhotos } from './composables'
 
-const auth0 = useAuth0()
 const getCurrentUrlOrigin = () => window.location.origin
+const { AuthService, isAuthenticated, isLoading, error: authError } = useAuthService()
 const { data: photos } = useGetPhotos()
 </script>
 
@@ -13,16 +12,17 @@ const { data: photos } = useGetPhotos()
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
 
   <div :style="{marginBottom: '20px'}">
-    <span v-if="auth0.isLoading.value">Loading auth...</span>
+    <p v-if="authError">Auth Error: {{ authError.message }}</p>
+    <p v-if="isLoading">Loading auth...</p>
     <button
-      v-else-if="auth0.isAuthenticated.value"
-      @click="() => auth0.logout({ returnTo: getCurrentUrlOrigin() })"
+      v-else-if="isAuthenticated"
+      @click="() => AuthService.logout()"
     >
       Logout
     </button>
     <button
       v-else
-      @click="auth0.loginWithRedirect"
+      @click="() => AuthService.login()"
     >
       Login
     </button>
