@@ -1,4 +1,4 @@
-import { IErrorOptions } from '@/types'
+import { I_ErrorOptions } from '@/types'
 
 export class AuthError extends Error {
   name: string
@@ -8,7 +8,7 @@ export class AuthError extends Error {
     options,
   }: {
     message: string
-    options?: IErrorOptions
+    options?: I_ErrorOptions
   }) {
     super(message, options)
 

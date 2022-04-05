@@ -1,3 +1,3 @@
-export interface IErrorOptions {
+export interface I_ErrorOptions {
   cause: Error
 }

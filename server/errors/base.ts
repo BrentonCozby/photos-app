@@ -1,4 +1,4 @@
-import { IErrorOptions } from '@/errors/types'
+import { I_ErrorOptions } from '@/errors/types'
 import { I_JsonError } from '@/types'
 
 export class BasicError extends Error {
@@ -16,7 +16,7 @@ export class BasicError extends Error {
   }: {
     code: string
     message: string
-    options?: IErrorOptions
+    options?: I_ErrorOptions
     source?: I_JsonError['source']
     meta?: I_JsonError['meta']
   }) {

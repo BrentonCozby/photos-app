@@ -1,5 +1,5 @@
 import { BasicError } from './base'
-import { IErrorOptions, I_JsonError } from '@/types'
+import { I_ErrorOptions, I_JsonError } from '@/types'
 
 export class AuthError extends BasicError {
   name: string
@@ -11,7 +11,7 @@ export class AuthError extends BasicError {
     source,
   }: {
     message: string
-    options?: IErrorOptions
+    options?: I_ErrorOptions
     meta?: I_JsonError['meta']
     source?: I_JsonError['source']
   }) {

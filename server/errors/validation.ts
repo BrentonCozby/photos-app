@@ -1,5 +1,5 @@
 import { I_JsonError } from '@/types'
-import { IErrorOptions } from './types'
+import { I_ErrorOptions } from './types'
 import { BasicError } from './base'
 
 export class ValidationError extends BasicError {
@@ -16,7 +16,7 @@ export class ValidationError extends BasicError {
     fieldName: string
     value: unknown
     message: string
-    options?: IErrorOptions
+    options?: I_ErrorOptions
     meta?: I_JsonError['meta']
     source?: I_JsonError['source']
   }) {
@@ -47,7 +47,7 @@ export class RequiredError extends BasicError {
   }: {
     fieldName: string
     value: unknown
-    options?: IErrorOptions
+    options?: I_ErrorOptions
     meta?: I_JsonError['meta']
     source?: I_JsonError['source']
   }) {
@@ -76,7 +76,7 @@ export class NotFoundError extends BasicError {
     source,
   }: {
     message?: string
-    options?: IErrorOptions
+    options?: I_ErrorOptions
     meta?: Record<string, string>
     source?: I_JsonError['source']
   } = {}) {
@@ -107,7 +107,7 @@ export class StaleDataError extends BasicError {
   }: {
     resourceName?: string
     staleField?: string
-    options?: IErrorOptions
+    options?: I_ErrorOptions
     meta?: Record<string, string>
     source?: I_JsonError['source']
   } = {}) {
