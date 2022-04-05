@@ -5,6 +5,8 @@ import 'express-async-errors'
 import helmet from 'helmet'
 import { router } from '@/routes'
 import { IS_PROD } from '@/constants'
+import { errorHandlers } from '@/errors'
+import { toExpressErrorHandler } from '@/utils'
 
 async function createApp() {
   const app = express()
@@ -23,6 +25,8 @@ async function createApp() {
       res.sendFile(path.resolve(__dirname, '..', '..', 'spa', 'dist', 'index.html'))
     })
   } // else, let Vite serve the SPA
+
+  app.use(toExpressErrorHandler(errorHandlers))
 
   return app
 }

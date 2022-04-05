@@ -25,3 +25,5 @@ export interface I_HttpResponse<B = any> {
 }
 
 export type T_Controller<Q = any, P = any> = (request: I_HttpRequest<Q>) => Promise<I_HttpResponse<P>>
+
+export type T_ErrorController<E = unknown, Q = any, P = any> = (error: E, request: I_HttpRequest<Q>) => Promise<I_HttpResponse<P>>
