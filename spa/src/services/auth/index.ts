@@ -9,6 +9,7 @@ let auth0: Auth0Client
 let state: I_AuthServiceState = {
   isLoading: false,
   isAuthenticated: false,
+  error: undefined,
   accessToken: undefined,
   userInfo: undefined,
   idClaims: undefined,
@@ -59,6 +60,7 @@ async function init() {
       await getIdClaims(),
     ])
 
+    newState.error = undefined
     newState.isAuthenticated = data[0]
     newState.accessToken = data[1]
     newState.userInfo = data[2]
@@ -74,7 +76,7 @@ async function init() {
         options: { cause: authError },
       })
     } else {
-      newState.error = authError
+      newState.error = authError as Error
     }
 
     console.error(newState.error)

@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import { useQuery, UseQueryOptions } from 'vue-query'
-import { useAuthService } from '../auth'
+import { useAuthStore } from '@/stores'
 import * as PhotosApi from '@/services/photosApi'
 
 /**
@@ -14,11 +14,11 @@ export const useGetPhotos = ({
   id?: string
   params?: {[key: string]: any}
 } = {}) => {
-  const { isAuthenticated } = useAuthService()
+  const authStore = useAuthStore()
   const queryKey = ['photos', id]
 
   const queryOptions: UseQueryOptions = {
-    enabled: computed(() => isAuthenticated.value),
+    enabled: computed(() => authStore.isAuthenticated),
   }
 
   async function queryFunction() {
