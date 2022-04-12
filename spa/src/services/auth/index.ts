@@ -70,16 +70,7 @@ async function init() {
   }
 
   if (authError) {
-    if (authError instanceof GenericError) {
-      newState.error = new AuthError({
-        message: authError.message,
-        options: { cause: authError },
-      })
-    } else {
-      newState.error = authError as Error
-    }
-
-    console.error(newState.error)
+    newState.error = toAuthError(authError)
   }
 
   setState(newState)
@@ -132,9 +123,7 @@ async function login() {
 
   setState({ isLoading: true })
 
-  const response = await auth0.loginWithRedirect()
-
-  return response
+  return auth0.loginWithRedirect()
 }
 
 async function logout() {
@@ -144,8 +133,14 @@ async function logout() {
 
   setState({ isLoading: true })
 
-  const response = await auth0.logout({ returnTo: window.location.origin })
   const newState: Partial<I_AuthServiceState> = {}
+
+  let response
+  try {
+    response = await auth0.logout({ returnTo: window.location.origin })
+  } catch (error) {
+    newState.error = toAuthError(error)
+  }
 
   newState.isLoading = false
   newState.isAuthenticated = false
@@ -168,6 +163,19 @@ function setState(newState: Partial<I_AuthServiceState>) {
   state = { ...state, ...newState }
 
   Object.values(listeners).forEach(cb => cb(getState()))
+}
+
+function toAuthError(error: unknown) {
+  console.error(error)
+
+  if (error instanceof GenericError) {
+    return new AuthError({
+      message: error.message,
+      options: { cause: error },
+    })
+  } else {
+    return error as Error
+  }
 }
 
 const authService = {
