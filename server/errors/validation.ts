@@ -5,14 +5,7 @@ import { BasicError } from './base'
 export class ValidationError extends BasicError {
   name: string
 
-  constructor({
-    fieldName,
-    value,
-    message,
-    options,
-    meta,
-    source,
-  }: {
+  constructor(args: {
     fieldName: string
     value: unknown
     message: string
@@ -20,6 +13,15 @@ export class ValidationError extends BasicError {
     meta?: I_JsonError['meta']
     source?: I_JsonError['source']
   }) {
+    const {
+      fieldName,
+      value,
+      message,
+      options,
+      meta,
+      source,
+    } = args
+
     super({
       code: 'PAE-1',
       message: `Field: ${fieldName}. Value: ${JSON.stringify(value)}. Message: ${message}`,
@@ -38,19 +40,21 @@ export class ValidationError extends BasicError {
 export class RequiredError extends BasicError {
   name: string
 
-  constructor({
-    fieldName,
-    value,
-    options,
-    meta,
-    source,
-  }: {
+  constructor(args: {
     fieldName: string
     value: unknown
     options?: I_ErrorOptions
     meta?: I_JsonError['meta']
     source?: I_JsonError['source']
   }) {
+    const {
+      fieldName,
+      value,
+      options,
+      meta,
+      source,
+    } = args
+
     super({
       code: 'PAE-2',
       message: `Missing field: ${fieldName}. Received value: ${JSON.stringify(value)}`,
@@ -69,17 +73,19 @@ export class RequiredError extends BasicError {
 export class NotFoundError extends BasicError {
   name: string
 
-  constructor({
-    message = 'Resource not found',
-    options,
-    meta,
-    source,
-  }: {
+  constructor(args?: {
     message?: string
     options?: I_ErrorOptions
     meta?: Record<string, string>
     source?: I_JsonError['source']
-  } = {}) {
+  }) {
+    const {
+      message = 'Resource not found',
+      options,
+      meta,
+      source,
+    } = args || {}
+
     super({
       code: 'PAE-3',
       message,
@@ -98,19 +104,21 @@ export class NotFoundError extends BasicError {
 export class StaleDataError extends BasicError {
   name: string
 
-  constructor({
-    resourceName = 'record',
-    staleField,
-    options,
-    meta,
-    source,
-  }: {
+  constructor(args?: {
     resourceName?: string
     staleField?: string
     options?: I_ErrorOptions
     meta?: Record<string, string>
     source?: I_JsonError['source']
-  } = {}) {
+  }) {
+    const {
+      resourceName = 'record',
+      staleField,
+      options,
+      meta,
+      source,
+    } = args || {}
+
     super({
       code: 'PAE-4',
       message: `This ${resourceName} has already been modified. Try again with new data${staleField ? ' for ' + staleField : ''}.`,

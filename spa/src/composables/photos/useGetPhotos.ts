@@ -7,13 +7,11 @@ import * as PhotosApi from '@/services/photosApi'
  * Get one or many photos. Returns one photo if the `id` param is passed.
  * @param [args.id] - a photo id
  */
-export const useGetPhotos = ({
-  id,
-  params,
-}: {
+export const useGetPhotos = (args?: {
   id?: string
   params?: {[key: string]: any}
-} = {}) => {
+}) => {
+  const { id, params } = args || {}
   const authStore = useAuthStore()
   const queryKey = ['photos', id]
 

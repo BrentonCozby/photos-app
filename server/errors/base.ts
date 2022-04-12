@@ -7,19 +7,21 @@ export class BasicError extends Error {
   source?: I_JsonError['source']
   meta?: I_JsonError['meta']
 
-  constructor({
-    code,
-    message,
-    options,
-    source,
-    meta,
-  }: {
+  constructor(args: {
     code: string
     message: string
     options?: I_ErrorOptions
     source?: I_JsonError['source']
     meta?: I_JsonError['meta']
   }) {
+    const {
+      code,
+      message,
+      options,
+      source,
+      meta,
+    } = args
+
     super(message, options)
 
     this.name = 'Error'

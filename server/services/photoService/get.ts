@@ -2,11 +2,13 @@ import { prisma } from '@/db'
 import JSONAPISerializer from 'json-api-serializer'
 import { I_Photo } from '@/types'
 
-export const getOne = async ({
-  id,
-}: {
+export const getOne = async (args: {
   id: string
 }) => {
+  const {
+    id,
+  } = args
+
   const dbResponse = await prisma.photo.findFirst({
     where: {
       id: id,
@@ -20,11 +22,13 @@ export const getOne = async ({
   return Serializer.serialize('photo', dbResponse)
 }
 
-export const getMany = async ({
-  limit = 25,
-}: {
+export const getMany = async (args?: {
   limit?: number
-} = {}) => {
+}) => {
+  const {
+    limit = 25,
+  } = args || {}
+
   const dbResponse = await prisma.photo.findMany({
     take: limit,
   })

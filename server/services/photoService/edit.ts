@@ -4,10 +4,7 @@ import { I_Photo } from '@/types'
 import { RequiredError, ValidationError } from '@/errors'
 import { isEmpty } from 'lodash'
 
-export const editOne = async ({
-  id,
-  data,
-}: {
+export const editOne = async (args: {
   id: I_Photo['id']
   data: {
     description?: I_Photo['description']
@@ -15,6 +12,11 @@ export const editOne = async ({
     url?: I_Photo['url']
   }
 }) => {
+  const {
+    id,
+    data,
+  } = args
+
   if (!id) {
     throw new RequiredError({ fieldName: 'id', value: id })
   }

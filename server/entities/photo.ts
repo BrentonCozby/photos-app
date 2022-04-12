@@ -3,20 +3,22 @@ import { RequiredError, ValidationError } from '@/errors'
 import { I_Photo } from '@/types'
 import { createId, isValidId } from '@/utils'
 
-interface IArgs extends Partial<I_Photo> {
+interface I_MakePhotoArgs extends Partial<I_Photo> {
   description: I_Photo['description']
   name: I_Photo['name']
   url: I_Photo['url']
 }
 
-export function makePhoto({
-  createdAt = '',
-  description,
-  id = createId(),
-  name,
-  updatedAt = '',
-  url,
-}: IArgs) {
+export function makePhoto(args: I_MakePhotoArgs) {
+  const {
+    createdAt = '',
+    description,
+    id = createId(),
+    name,
+    updatedAt = '',
+    url,
+  } = args
+
   if (id && !isValidId(id)) {
     throw new ValidationError({ fieldName: 'id', value: id, message: 'Must be a cuid' })
   }

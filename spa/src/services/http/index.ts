@@ -2,13 +2,15 @@ import axios from 'axios'
 import authService from '../auth'
 
 
-export const createHttpInstance = ({
-  baseURL,
-  headers,
-}: {
+export const createHttpInstance = (args?: {
   baseURL?: string
   headers?: Record<string, string>
-} = {}) => {
+}) => {
+  const {
+    baseURL,
+    headers,
+  } = args || {}
+
   const httpInstance = axios.create({
     baseURL: baseURL,
   })

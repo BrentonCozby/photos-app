@@ -1,11 +1,13 @@
 import { prisma } from '@/db'
 import JSONAPISerializer from 'json-api-serializer'
 
-export const removeOne = async ({
-  id,
-}: {
+export const removeOne = async (args: {
   id: string
 }) => {
+  const {
+    id,
+  } = args
+
   const dbResponse = await prisma.photo.delete({
     where: {
       id: id,
