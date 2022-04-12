@@ -2,7 +2,7 @@
 import HelloWorld from './components/HelloWorld.vue'
 import { useGetPhotos } from './composables'
 import { useAuthStore } from '@/stores'
-import { AuthService } from '@/services'
+import { authService } from '@/services'
 
 const getCurrentUrlOrigin = () => window.location.origin
 const { data: photos } = useGetPhotos()
@@ -18,13 +18,13 @@ const authStore = useAuthStore()
     <p v-if="authStore.isLoading">Loading auth...</p>
     <button
       v-else-if="authStore.isAuthenticated"
-      @click="() => AuthService.logout()"
+      @click="() => authService.logout()"
     >
       Logout
     </button>
     <button
       v-else
-      @click="() => AuthService.login()"
+      @click="() => authService.login()"
     >
       Login
     </button>

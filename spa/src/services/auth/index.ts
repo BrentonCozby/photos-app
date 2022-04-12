@@ -16,7 +16,7 @@ let state: I_AuthServiceState = {
 }
 
 /**
- * Initialize the AuthService by connecting with the auth provider
+ * Initialize the authService by connecting with the auth provider
  */
 async function init() {
   let authError: unknown
@@ -170,7 +170,7 @@ function setState(newState: Partial<I_AuthServiceState>) {
   Object.values(listeners).forEach(cb => cb(getState()))
 }
 
-const AuthService = {
+const authService = {
   init,
   getAuth0Client,
   getState,
@@ -183,4 +183,4 @@ const AuthService = {
   listen,
 }
 
-export default AuthService
+export default authService

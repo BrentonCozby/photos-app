@@ -1,5 +1,5 @@
 import axios from 'axios'
-import AuthService from '../auth'
+import authService from '../auth'
 
 
 export const createHttpInstance = ({
@@ -19,7 +19,7 @@ export const createHttpInstance = ({
 
   httpInstance.interceptors.request.use(async (config) => {
     if (config.headers && !headers?.Authorization) {
-      const accessToken = await AuthService.getAccessToken()
+      const accessToken = await authService.getAccessToken()
 
       config.headers.Authorization = `Bearer ${accessToken}`
     }

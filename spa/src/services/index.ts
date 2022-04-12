@@ -1,3 +1,3 @@
 export * from './http'
-export { default as AuthService } from './auth'
+export { default as authService } from './auth'
 export * from './photosApi'

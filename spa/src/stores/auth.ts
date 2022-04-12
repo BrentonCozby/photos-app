@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, Ref } from 'vue'
 import { User, IdToken } from '@auth0/auth0-spa-js'
-import { AuthService } from '@/services'
+import { authService } from '@/services'
 
 export const useAuthStore = defineStore('auth', () => {
   const isLoading = ref(true)
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 })
 
-AuthService.listen((newState) => {
+authService.listen((newState) => {
   const authStore = useAuthStore()
 
   authStore.$patch({

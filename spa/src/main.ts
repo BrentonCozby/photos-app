@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { VueQueryPlugin } from 'vue-query'
-import { AuthService } from '@/services'
+import { authService } from '@/services'
 import App from './App.vue'
 
-AuthService.init()
+authService.init()
 
 export const app = createApp(App)
 export const pinia = createPinia()
