@@ -34,13 +34,14 @@ services:
       - '${SPA_PORT}:8022'
     volumes:
       - .:/usr/src:delegated
-      # - spa_node_modules:/usr/src/spa/node_modules
-      - server_tmp:/tmp # for jest cache
+      - spa_node_modules:/usr/src/spa/node_modules
+      - spa_tmp:/tmp # for jest cache
     depends_on:
       - server
 
 volumes:
   photos_app_db:
   server_node_modules:
-  # spa_node_modules:
   server_tmp:
+  spa_node_modules:
+  spa_tmp:
