@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { useQuery, UseQueryOptions } from 'vue-query'
 import { useAuthStore } from '@/stores'
-import * as PhotosApi from '@/services/photosApi'
+import * as PhotoService from '@/services/photoService'
 
 /**
  * Get one or many photos. Returns one photo if the `id` param is passed.
@@ -21,12 +21,12 @@ export const useGetPhotos = (args?: {
 
   async function queryFunction() {
     if (id) {
-      const photo = await PhotosApi.getOne({ id })
+      const photo = await PhotoService.getOne({ id })
 
       return [photo]
     }
 
-    return PhotosApi.getMany({ params })
+    return PhotoService.getMany({ params })
   }
 
   return useQuery(queryKey, queryFunction, queryOptions)

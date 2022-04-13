@@ -1,8 +1,7 @@
-import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js'
+import createAuth0Client, { Auth0Client, GenericError } from '@auth0/auth0-spa-js'
 import { I_AuthServiceState, T_ListenCb } from './types'
 import cloneDeep from 'lodash/cloneDeep'
 import { AuthError } from '@/errors'
-import { GenericError } from '@auth0/auth0-spa-js'
 
 let auth0: Auth0Client
 

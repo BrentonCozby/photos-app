@@ -1,4 +1,4 @@
-import { createHttpInstance } from '@/services/http'
+import { createHttpInstance } from '@/services/httpService'
 
 const {
   VITE_PHOTOS_SERVICE_HOST: HOST,

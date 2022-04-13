@@ -1,5 +1,5 @@
 import axios from 'axios'
-import authService from '../auth'
+import authService from '../authService'
 
 
 export const createHttpInstance = (args?: {
