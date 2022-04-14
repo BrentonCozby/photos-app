@@ -1,5 +1,13 @@
 .DEFAULT_GOAL := help
 
+start:
+	@echo "Starting Photos App containers..."
+	docker-compose up -d
+
+stop:
+	@echo "Stopping Photos App containers..."
+	docker-compose stop
+
 bash:
 	@echo "Starting Photos App shell..."
 	docker exec -it photos_app.server /bin/bash
@@ -53,6 +61,8 @@ help:
 	@echo "  Photos App Commands"
 	@echo "  |"
 	@echo "  |_ help (default)              - Show this message"
+	@echo "  |_ start                       - Start the Photos App containers"
+	@echo "  |_ stop                        - Stop the Photos App containers"
 	@echo "  |_ bash                        - Start a shell session"
 	@echo "  |_ rserver                     - Run a command in the server container"
 	@echo "  |_ rspa                        - Run a command in the spa container"
@@ -69,6 +79,8 @@ help:
 	@echo " "
 
 .PHONY:
+	start
+	stop
 	bash
 	rserver
 	rspa
