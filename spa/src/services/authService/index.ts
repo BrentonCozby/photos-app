@@ -1,7 +1,6 @@
-import createAuth0Client, { Auth0Client, GenericError } from '@auth0/auth0-spa-js'
+import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js'
 import { I_AuthServiceState, T_ListenCb } from './types'
 import cloneDeep from 'lodash/cloneDeep'
-import { AuthError } from '@/errors'
 
 let auth0: Auth0Client
 
@@ -49,8 +48,6 @@ async function init() {
 
   const newState: Partial<I_AuthServiceState> = {}
 
-  newState.isLoading = false
-
   try {
     const data = await Promise.all([
       await isAuthenticated(),
@@ -60,6 +57,7 @@ async function init() {
     ])
 
     newState.error = undefined
+    newState.isLoading = false
     newState.isAuthenticated = data[0]
     newState.accessToken = data[1]
     newState.userInfo = data[2]
@@ -69,13 +67,13 @@ async function init() {
   }
 
   if (authError) {
-    newState.error = toAuthError(authError)
+    newState.error = authError instanceof Error ? authError : new Error(String(authError))
   }
 
   setState(newState)
 }
 
-async function getAuth0Client() {
+function getAuth0Client() {
   return auth0
 }
 
@@ -134,22 +132,19 @@ async function logout() {
 
   const newState: Partial<I_AuthServiceState> = {}
 
-  let response
   try {
-    response = await auth0.logout({ returnTo: window.location.origin })
+    await auth0.logout({ returnTo: window.location.origin })
+
+    newState.isLoading = false
+    newState.isAuthenticated = false
+    newState.accessToken = undefined
+    newState.userInfo = undefined
+    newState.idClaims = undefined
   } catch (error) {
-    newState.error = toAuthError(error)
+    newState.error = error instanceof Error ? error : new Error(String(error))
   }
 
-  newState.isLoading = false
-  newState.isAuthenticated = false
-  newState.accessToken = undefined
-  newState.userInfo = undefined
-  newState.idClaims = undefined
-
   setState(newState)
-
-  return response
 }
 
 const listeners: Record<string, T_ListenCb> = {}
@@ -162,19 +157,6 @@ function setState(newState: Partial<I_AuthServiceState>) {
   state = { ...state, ...newState }
 
   Object.values(listeners).forEach(cb => cb(getState()))
-}
-
-function toAuthError(error: unknown) {
-  console.error(error)
-
-  if (error instanceof GenericError) {
-    return new AuthError({
-      message: error.message,
-      options: { cause: error },
-    })
-  } else {
-    return error as Error
-  }
 }
 
 const authService = {
