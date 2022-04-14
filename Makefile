@@ -12,7 +12,7 @@ rspa:
 
 logs:
 	@echo "Following all container logs..."
-	docker-compose logs -f --tail=0
+	docker-compose logs -f --tail=100
 
 lint:
 	@echo "Linting Photos App..."
