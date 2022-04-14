@@ -1,6 +1,8 @@
+import { RequiredError, ValidationError } from '@/errors'
 import { authService, photoService } from '@/services'
 import { T_Controller, T_ExpressHandler } from '@/types'
 import { toHttpResponse, toExpressHandler } from '@/utils'
+import { PhotoSerializer } from './serializers'
 
 const postPhoto: T_Controller = async (request) => {
   let responseBody
@@ -12,7 +14,13 @@ const postPhoto: T_Controller = async (request) => {
       url: request.body.url,
     })
   } catch (error) {
-    console.log('TODO: respond with error response')
+    if (error instanceof RequiredError || error instanceof ValidationError) {
+      return toHttpResponse({
+        status: 400,
+        body: PhotoSerializer.serializeError(error),
+      })
+    }
+
     throw error
   }
 
