@@ -21,6 +21,7 @@ export interface I_HttpRequest<B = any> {
 export interface I_HttpResponse<B = any> {
   headers: I_HttpHeaders
   status: string | number
+  statusCode: string | number
   body?: B
 }
 

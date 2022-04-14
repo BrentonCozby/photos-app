@@ -1,8 +1,7 @@
 import { UnauthorizedError } from 'express-oauth2-jwt-bearer'
-import { AuthError } from '@/errors'
 import { toHttpResponse } from '@/utils'
 import JSONAPISerializer from 'json-api-serializer'
-import { I_HttpResponse, T_ErrorController } from '@/types'
+import { T_ErrorController } from '@/types'
 
 const ErrorSerializer = new JSONAPISerializer()
 ErrorSerializer.register('error')
@@ -18,20 +17,18 @@ export const errorHandlers: T_ErrorController = async (error) => {
   })
 
   if (error instanceof UnauthorizedError) {
-    errorResponse = handleAuth0Error(error)
+    const body = ErrorSerializer.serializeError(error) as JSONAPISerializer.JSONAPIDocument
+
+    body.errors?.forEach((error) => {
+      error.meta = { ...error.meta, source: 'auth0' }
+    })
+
+    errorResponse = toHttpResponse({
+      status: error.status,
+      headers: error.headers,
+      body,
+    })
   }
 
   return errorResponse
-}
-
-function handleAuth0Error(error: UnauthorizedError): I_HttpResponse {
-  const newError = new AuthError({
-    message: error.message,
-    options: { cause: error },
-  })
-
-  return toHttpResponse({
-    status: 401,
-    body: ErrorSerializer.serializeError(newError),
-  })
 }
