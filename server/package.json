@@ -4,8 +4,8 @@
   "description": "Server for the Photos App",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register index.ts",
-    "start:dev": "nodemon --ext 'js,ts,json' --swc -r tsconfig-paths/register index.ts",
+    "start": "NODE_ENV=production ts-node -r tsconfig-paths/register index.ts",
+    "start:dev": "NODE_ENV=development nodemon --ext 'js,ts,json' --swc -r tsconfig-paths/register index.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "precommit": "npm run lint",
