@@ -1,12 +1,31 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import { useGetPhotos } from './composables'
+import { usePhotosQuery, useCreatePhotoMutation } from './composables'
 import { useAuthStore } from '@/stores'
 import { authService } from '@/services'
+import { getAxiosErrorData } from '@/utils'
 
 const getCurrentUrlOrigin = () => window.location.origin
-const { data: photos } = useGetPhotos()
+
 const authStore = useAuthStore()
+
+const { data: photos, isLoading: isLoadingPhotos } = usePhotosQuery()
+
+const {
+  mutate: createPhoto,
+  isLoading: isCreatingPhoto,
+  error: createPhotoError,
+} = useCreatePhotoMutation()
+
+function onAddPhotoClick() {
+  createPhoto({
+    photoData: {
+      name: 'Zebra Ted',
+      description: 'A slow zebra',
+      // url: 'photosapp.com/2',
+    }
+  })
+}
 </script>
 
 <template>
@@ -28,6 +47,23 @@ const authStore = useAuthStore()
     >
       Login
     </button>
+    <button
+      v-if="authStore.isAuthenticated"
+      :style="{marginLeft: '24px'}"
+      @click="onAddPhotoClick"
+    >
+      Add Photo
+    </button>
+  </div>
+
+  <p v-if="isLoadingPhotos">Loading photos...</p>
+  <p v-if="isCreatingPhoto">Adding photo...</p>
+
+  <div v-if="createPhotoError" :style="{color: 'red'}">
+    <div>Failed to add photo:</div>
+    <div style="max-width: 400px; margin: auto;">
+      <p>{{ getAxiosErrorData(createPhotoError)?.detail }}</p>
+    </div>
   </div>
 
   <div style="max-width: 400px; margin: auto;">
