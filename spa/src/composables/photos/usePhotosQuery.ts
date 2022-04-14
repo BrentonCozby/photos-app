@@ -7,7 +7,7 @@ import * as PhotoService from '@/services/photoService'
  * Get one or many photos. Returns one photo if the `id` param is passed.
  * @param [args.id] - a photo id
  */
-export const useGetPhotos = (args?: {
+export const usePhotosQuery = (args?: {
   id?: string
   params?: {[key: string]: any}
 }) => {

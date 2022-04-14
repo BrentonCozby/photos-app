@@ -1,1 +1,1 @@
-export * from './useGetPhotos'
+export * from './usePhotosQuery'
