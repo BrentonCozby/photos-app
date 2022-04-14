@@ -11,13 +11,14 @@ export const toHttpResponse = <B = any>(args?: {
 }) => {
   const {
     headers = defaultHeaders,
-    status = 200, // OK
+    status = 200,
     body,
   } = args || {}
 
   const response: I_HttpResponse = {
     headers,
     status,
+    statusCode: status,
   }
 
   if (body) {
