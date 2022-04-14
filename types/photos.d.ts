@@ -6,3 +6,9 @@ export interface I_Photo {
   updatedAt: Date | string
   url: string
 }
+
+export interface I_PhotoNew {
+  description: string
+  name: string
+  url: string
+}
