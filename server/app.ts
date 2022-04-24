@@ -3,7 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import 'express-async-errors'
 import helmet from 'helmet'
-import { router } from '@/routes'
+import { mainRouter } from '@/routes'
 import { IS_PROD } from '@/constants'
 import { errorHandlers } from '@/errors'
 import { toExpressErrorHandler } from '@/utils'
@@ -16,7 +16,7 @@ async function createApp() {
   })) // https://github.com/helmetjs/helmet
   app.use(express.json())
   app.use(cors())
-  app.use(router)
+  app.use(mainRouter)
 
   if (IS_PROD) {
     app.use(express.static(path.resolve(__dirname, '..', 'spa', 'dist')))
