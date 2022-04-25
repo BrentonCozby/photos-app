@@ -9,13 +9,17 @@ export function isAxiosError(error: unknown): boolean {
   return false
 }
 
-export function getAxiosErrorData(error: unknown): I_JsonError | undefined {
+export function getAxiosErrorData(error: unknown): I_JsonError {
   if (!isAxiosError(error)) {
-    return
+    return { detail: (error as Error)?.message }
   }
 
   const axiosError = error as AxiosError
-  const errorData: I_JsonErrorDocument = axiosError.response?.data || {}
+  const errorData: string | I_JsonErrorDocument = axiosError.response?.data || {}
+
+  if (typeof errorData === 'string') {
+    return { detail: (error as Error).message }
+  }
 
   return errorData.errors[0]
 }
