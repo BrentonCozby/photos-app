@@ -9,7 +9,7 @@ import { I_PhotoNew } from '@/types'
 export const useCreatePhotoMutation = () => {
   const queryClient = useQueryClient()
 
-  async function queryFunction(args: {
+  async function mutationFunction(args: {
     photoData: I_PhotoNew
   }) {
     const { photoData } = args
@@ -17,7 +17,7 @@ export const useCreatePhotoMutation = () => {
     return PhotoService.postOne({ photoData })
   }
 
-  return useMutation(queryFunction, {
+  return useMutation(mutationFunction, {
     onSuccess() {
       queryClient.invalidateQueries('photos')
     },
