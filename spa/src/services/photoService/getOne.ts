@@ -9,6 +9,10 @@ export async function getOne(args: {
     id,
   } = args
 
+  if (!id?.trim()) {
+    throw new Error(`Photo ID is required. Received: ${JSON.stringify(id)}`)
+  }
+
   const { data: photosJson } = await photosHttp.get(`/${id}`)
 
   const photo: I_Photo = PhotoSerializer.deserialize('photo', photosJson)
