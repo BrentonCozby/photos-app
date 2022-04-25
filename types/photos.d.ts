@@ -12,3 +12,7 @@ export interface I_PhotoNew {
   name: string
   url: string
 }
+
+export interface I_PhotoUpdate extends Partial<I_Photo> {
+  id: I_Photo['id']
+}
