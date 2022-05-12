@@ -2,6 +2,7 @@ import { computed } from 'vue'
 import { useQuery, UseQueryOptions } from 'vue-query'
 import { useAuthStore } from '@/stores'
 import * as PhotoService from '@/services/photoService'
+import { I_Photo } from '@/types'
 
 /**
  * Get one or many photos. Returns one photo if the `id` param is passed.
@@ -15,7 +16,7 @@ export const usePhotosQuery = (args?: {
   const authStore = useAuthStore()
   const queryKey = ['photos', id]
 
-  const queryOptions: UseQueryOptions = {
+  const queryOptions: UseQueryOptions<I_Photo[]> = {
     enabled: computed(() => authStore.isAuthenticated),
   }
 
@@ -29,5 +30,5 @@ export const usePhotosQuery = (args?: {
     return PhotoService.getMany({ params })
   }
 
-  return useQuery(queryKey, queryFunction, queryOptions)
+  return useQuery<I_Photo[]>(queryKey, queryFunction, queryOptions)
 }
