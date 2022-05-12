@@ -120,7 +120,17 @@ async function login() {
 
   setState({ isLoading: true })
 
-  return auth0.loginWithRedirect()
+  return auth0.loginWithRedirect({ screen_hint: 'login' })
+}
+
+async function signup() {
+  if (!auth0) {
+    return
+  }
+
+  setState({ isLoading: true })
+
+  return auth0.loginWithRedirect({ screen_hint: 'signup' })
 }
 
 async function logout() {
@@ -167,6 +177,7 @@ const authService = {
   getAccessToken,
   getIdClaims,
   isAuthenticated,
+  signup,
   login,
   logout,
   listen,
