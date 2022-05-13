@@ -40,6 +40,7 @@ export function makePhoto(args: I_MakePhotoArgs) {
     createdAt: createdAt || timestamp,
     description: sanitizeText(description),
     id: id,
+    isArchived: false,
     name: sanitizeText(name),
     updatedAt: updatedAt || timestamp,
     url: sanitizeUrl(url),

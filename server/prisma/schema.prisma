@@ -12,8 +12,9 @@ datasource db {
 model Photo {
   id          String   @id
   name        String   @db.VarChar(128)
-  createdAt   DateTime 
-  updatedAt   DateTime 
+  createdAt   DateTime
+  updatedAt   DateTime
   url         String   @db.VarChar(255)
   description String   @db.VarChar(255)
+  isArchived  Boolean  @default(false)
 }
