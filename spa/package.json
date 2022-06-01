@@ -1,6 +1,5 @@
 {
   "name": "photos-app-spa",
-  "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -8,24 +7,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.21.0",
-    "axios": "^0.26.1",
+    "@auth0/auth0-spa-js": "^1.22.0",
+    "axios": "^0.27.2",
     "dotenv-flow": "^3.2.0",
     "json-api-serializer": "^2.6.6",
     "lodash": "^4.17.21",
-    "pinia": "^2.0.13",
-    "vue": "^3.2.25",
-    "vue-query": "^1.20.0",
-    "vue-router": "^4.0.14"
+    "pinia": "^2.0.14",
+    "vue": "^3.2.36",
+    "vue-query": "^1.25.0",
+    "vue-router": "^4.0.15"
   },
   "devDependencies": {
     "@types/dotenv-flow": "^3.2.0",
     "@types/json-api-serializer": "^2.6.3",
-    "@types/lodash": "^4.14.181",
-    "@types/node": "^17.0.21",
-    "@vitejs/plugin-vue": "^2.2.0",
-    "typescript": "^4.6.3",
-    "vite": "^2.8.0",
-    "vue-tsc": "^0.29.8"
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^17.0.38",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "typescript": "^4.7.2",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.35.2"
   }
 }
