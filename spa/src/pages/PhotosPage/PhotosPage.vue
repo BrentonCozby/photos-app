@@ -12,25 +12,33 @@ const photosQuery = usePhotosQuery()
 const createPhotoMutation = useCreatePhotoMutation()
 const deletePhotoMutation = useDeletePhotoMutation()
 
+let photoFileInput: Ref<HTMLInputElement | null> = ref(null)
+
 let photoIdToDelete: Ref<I_Photo['id']> = ref('')
-
-function onAddPhotoClick() {
-  const lastPhotoId = Number(photosQuery?.data?.value?.at(-1)?.url.replace('photosapp.com/', '')) || 0;
-
-  createPhotoMutation.mutate({
-    photoData: {
-      name: 'Zebra Ted',
-      description: 'A slow zebra',
-      url: `photosapp.com/${lastPhotoId + 1}`,
-    }
-  })
-}
 
 async function onDeletePhoto(e: Event) {
   e.preventDefault()
 
   await deletePhotoMutation.mutate({ id: photoIdToDelete.value })
+
   photoIdToDelete.value = ''
+  createPhotoMutation.reset.value()
+}
+
+async function onFileUpload(e: Event) {
+  const target = e.target as HTMLInputElement
+
+  createPhotoMutation.mutate({
+    photoData: {
+      name: 'Zebra Ted',
+      description: 'A slow zebra',
+    },
+    photoFile: target?.files?.[0],
+  })
+
+  if (photoFileInput.value) {
+    photoFileInput.value.value = ''
+  }
 }
 </script>
 
@@ -54,13 +62,13 @@ async function onDeletePhoto(e: Event) {
         Login / Sign Up
       </button>
     </span>
-    <button
+    <input
       v-if="authStore.isAuthenticated"
+      ref="photoFileInput"
+      type="file"
       :style="{marginLeft: '24px'}"
-      @click="onAddPhotoClick"
-    >
-      Add Photo
-    </button>
+      @change="onFileUpload"
+    />
 
     <div v-if="photosQuery.data.value?.length" :style="{marginTop: '24px'}">
       <form @submit="onDeletePhoto">

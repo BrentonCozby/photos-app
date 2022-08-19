@@ -7,6 +7,8 @@ export const toExpressHandler: toExpressHandlerType = (controller) => {
   return async (req, res, next) => {
     const httpRequest: I_HttpRequest = {
       body: req.body,
+      file: req.file,
+      files: req.files,
       query: req.query,
       pathParams: req.params,
       ip: req.ip,

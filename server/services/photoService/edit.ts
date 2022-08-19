@@ -1,5 +1,4 @@
 import { prisma } from '@/db'
-import JSONAPISerializer from 'json-api-serializer'
 import { I_Photo } from '@/types'
 import { RequiredError, ValidationError } from '@/errors'
 import { isEmpty } from 'lodash'
@@ -9,7 +8,6 @@ export const editOne = async (args: {
   data: {
     description?: I_Photo['description']
     name?: I_Photo['name']
-    url?: I_Photo['url']
   }
 }) => {
   const {
@@ -25,7 +23,7 @@ export const editOne = async (args: {
     throw new ValidationError({ fieldName: 'data', value: data, message: 'Cannot be empty' })
   }
 
-  const dbResponse = await prisma.photo.update({
+  return await prisma.photo.update({
     where: {
       id,
     },
@@ -35,9 +33,4 @@ export const editOne = async (args: {
     },
   })
 
-  const Serializer = new JSONAPISerializer()
-
-  Serializer.register('photo')
-
-  return Serializer.serialize('photo', dbResponse)
 }

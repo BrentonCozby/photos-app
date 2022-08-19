@@ -1,5 +1,4 @@
 import { prisma } from '@/db'
-import JSONAPISerializer from 'json-api-serializer'
 
 export const removeOne = async (args: {
   id: string
@@ -8,15 +7,40 @@ export const removeOne = async (args: {
     id,
   } = args
 
-  const dbResponse = await prisma.photo.delete({
+  const photo = await prisma.photo.delete({
     where: {
       id: id,
     },
   })
 
-  const Serializer = new JSONAPISerializer()
+  if (!photo) {
+    return null
+  }
 
-  Serializer.register('photo')
+  const hashRecord = await prisma.photoHash.findUnique({
+    where: {
+      hash: photo.contentHash,
+    },
+    include: {
+      _count: {
+        select: {
+          photos: true,
+        },
+      },
+    },
+  })
 
-  return Serializer.serialize('photo', dbResponse)
+  if (!hashRecord) {
+    throw new Error(`PhotoHash record not found for photo id: ${photo.id}`)
+  }
+
+  if (hashRecord._count.photos === 0) {
+    await prisma.photoHash.delete({
+      where: {
+        hash: photo.contentHash,
+      },
+    })
+  }
+
+  return photo
 }

@@ -4,19 +4,34 @@ import { T_Controller, T_ExpressHandler } from '@/types'
 import { NotFoundError } from '@/errors'
 import { toHttpResponse, toExpressHandler } from '@/utils'
 import { PhotoSerializer } from './serializers'
+import JSONAPISerializer from 'json-api-serializer'
 
 const deleteOnePhoto: T_Controller = async (request) => {
   let responseBody
+  const notFoundError = new NotFoundError({ message: 'Photo does not exist.' })
 
   try {
-    responseBody = await photoService.removeOne({
+    const photo = await photoService.getOne({
       id: request.pathParams.id,
     })
+
+    if (!photo) {
+      return toHttpResponse({
+        status: 404,
+        body: PhotoSerializer.serializeError(notFoundError),
+      })
+    }
+
+    await photoService.removeOne(photo)
+
+    const Serializer = new JSONAPISerializer()
+
+    Serializer.register('photo')
+
+    responseBody = Serializer.serialize('photo', photo)
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2025') {
-        const notFoundError = new NotFoundError({ message: 'Photo does not exist.' })
-
         return toHttpResponse({
           status: 404,
           body: PhotoSerializer.serializeError(notFoundError),

@@ -1,25 +1,55 @@
 import { prisma } from '@/db'
-import JSONAPISerializer from 'json-api-serializer'
 import { I_Photo } from '@/types'
+import { makePhoto } from '@/entities'
+
+export const getHash = async (args: {
+  contentHash: I_Photo['contentHash']
+}) => {
+  const {
+    contentHash,
+  } = args
+
+  return await prisma.photoHash.findUnique({
+    where: {
+      hash: contentHash,
+    },
+  })
+}
+
+export const getDuplicates = async (args: {
+  contentHash: I_Photo['contentHash']
+}) => {
+  const {
+    contentHash,
+  } = args
+
+  return await prisma.photo.findMany({
+    where: {
+      contentHash: contentHash,
+    },
+  })
+}
 
 export const getOne = async (args: {
-  id: string
+  id: I_Photo['id']
 }) => {
   const {
     id,
   } = args
 
-  const dbResponse = await prisma.photo.findFirst({
+  const dbResponse = await prisma.photo.findUnique({
     where: {
       id: id,
     },
   })
 
-  const Serializer = new JSONAPISerializer()
+  let response: I_Photo | null = null
 
-  Serializer.register('photo')
+  if (dbResponse) {
+    response = await makePhoto(dbResponse)
+  }
 
-  return Serializer.serialize('photo', dbResponse)
+  return response
 }
 
 export const getMany = async (args?: {
@@ -33,20 +63,11 @@ export const getMany = async (args?: {
     take: limit,
   })
 
-  const Serializer = new JSONAPISerializer()
+  let response: I_Photo[] = []
 
-  interface I_ExtraData {
-    limit: number
+  if (dbResponse?.length) {
+    response = await Promise.all(dbResponse.map(makePhoto))
   }
 
-  Serializer.register('photo', {
-    topLevelMeta: (data: I_Photo[], extraData: I_ExtraData) => {
-      return {
-        count: data.length,
-        limit: extraData.limit,
-      }
-    },
-  })
-
-  return Serializer.serialize('photo', dbResponse, { limit })
+  return response
 }

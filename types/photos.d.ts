@@ -1,6 +1,8 @@
 export interface I_Photo {
   createdAt: Date | string
+  contentHash: string
   description: string
+  fileBuffer?: Buffer
   id: string
   isArchived: boolean
   name: string
@@ -11,7 +13,6 @@ export interface I_Photo {
 export interface I_PhotoNew {
   description: string
   name: string
-  url: string
 }
 
 export interface I_PhotoUpdate extends Partial<I_Photo> {

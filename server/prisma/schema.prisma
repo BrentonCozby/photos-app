@@ -1,5 +1,3 @@
-// run `npx prisma generate` with every change in order to update the Prisma Client
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,12 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model PhotoHash {
+  hash   String  @id
+  photos Photo[]
+}
+
 model Photo {
-  id          String   @id
-  name        String   @db.VarChar(128)
-  createdAt   DateTime
-  updatedAt   DateTime
-  url         String   @db.VarChar(255)
-  description String   @db.VarChar(255)
-  isArchived  Boolean  @default(false)
+  id            String    @id
+  name          String    @db.VarChar(128)
+  createdAt     DateTime
+  updatedAt     DateTime
+  contentHash   String    @db.VarChar(255)
+  description   String    @db.VarChar(255)
+  isArchived    Boolean   @default(false)
+  photoHashHash PhotoHash @relation(fields: [contentHash], references: [hash])
 }

@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Express } from 'express'
 
 export * from '@/../types'
 
@@ -9,13 +9,15 @@ export interface I_HttpHeaders {
 }
 
 export interface I_HttpRequest<B = any> {
-  method: string
-  ip: string
-  path: string
-  headers: I_HttpHeaders
-  query: Record<string, any>
-  pathParams: Record<string, string>
   body?: B
+  file?: Express.Multer.File
+  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] }
+  headers: I_HttpHeaders
+  ip: string
+  method: string
+  path: string
+  pathParams: Record<string, string>
+  query: Record<string, any>
 }
 
 export interface I_HttpResponse<B = any> {

@@ -1,28 +1,20 @@
 import { prisma } from '@/db'
-import JSONAPISerializer from 'json-api-serializer'
-import { makePhoto } from '@/entities'
 import { I_Photo } from '@/types'
 
 export const addOne = async (args: {
-  name: I_Photo['name']
-  description: I_Photo['description']
-  url: I_Photo['url']
+  photo: I_Photo
 }) => {
   const {
-    name,
-    description,
-    url,
+    photo,
   } = args
 
-  const newPhoto = makePhoto({ name, description, url })
-
-  const dbResponse = await prisma.photo.create({
-    data: newPhoto,
+  await prisma.photoHash.create({
+    data: {
+      hash: photo.contentHash,
+    },
   })
 
-  const Serializer = new JSONAPISerializer()
-
-  Serializer.register('photo')
-
-  return Serializer.serialize('photo', dbResponse)
+  return await prisma.photo.create({
+    data: photo,
+  })
 }

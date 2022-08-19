@@ -76,7 +76,7 @@ export class NotFoundError extends BasicError {
   constructor(args?: {
     message?: string
     options?: I_ErrorOptions
-    meta?: Record<string, string>
+    meta?: I_JsonError['meta']
     source?: I_JsonError['source']
   }) {
     const {
@@ -101,6 +101,40 @@ export class NotFoundError extends BasicError {
   }
 }
 
+/**
+ * For when attempting to add/create a resource that already exists
+ */
+export class DuplicationError extends BasicError {
+  name: string
+
+  constructor(args?: {
+    message?: string
+    options?: I_ErrorOptions
+    meta?: I_JsonError['meta']
+    source?: I_JsonError['source']
+  }) {
+    const {
+      message = 'Resource already exists',
+      options,
+      meta,
+      source,
+    } = args || {}
+
+    super({
+      code: 'PAE-4',
+      message,
+      options,
+      meta: {
+        about: 'photosapp.com/errors/PAE-4',
+        ...meta,
+      },
+      source,
+    })
+
+    this.name = 'DuplicationError'
+  }
+}
+
 export class StaleDataError extends BasicError {
   name: string
 
@@ -108,7 +142,7 @@ export class StaleDataError extends BasicError {
     resourceName?: string
     staleField?: string
     options?: I_ErrorOptions
-    meta?: Record<string, string>
+    meta?: I_JsonError['meta']
     source?: I_JsonError['source']
   }) {
     const {
@@ -120,11 +154,11 @@ export class StaleDataError extends BasicError {
     } = args || {}
 
     super({
-      code: 'PAE-4',
+      code: 'PAE-5',
       message: `This ${resourceName} has already been modified. Try again with new data${staleField ? ' for ' + staleField : ''}.`,
       options,
       meta: {
-        about: 'photosapp.com/errors/PAE-4',
+        about: 'photosapp.com/errors/PAE-5',
         ...meta,
       },
       source,
