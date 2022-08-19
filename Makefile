@@ -8,12 +8,16 @@ stop:
 	@echo "Stopping Photos App containers..."
 	docker-compose stop
 
+bash-db:
+	@echo "Starting Photos App db shell..."
+	docker exec -it photos_app.db /bin/bash
+
 bash-server:
-	@echo "Starting Photos App shell..."
+	@echo "Starting Photos App server shell..."
 	docker exec -it photos_app.server /bin/bash
 
 bash-spa:
-	@echo "Starting Photos App shell..."
+	@echo "Starting Photos App spa shell..."
 	docker exec -it photos_app.spa /bin/bash
 
 rserver:
@@ -67,6 +71,7 @@ help:
 	@echo "  |_ help (default)              - Show this message"
 	@echo "  |_ start                       - Start the Photos App containers"
 	@echo "  |_ stop                        - Stop the Photos App containers"
+	@echo "  |_ bash-db                     - Start a shell session in the db container"
 	@echo "  |_ bash-server                 - Start a shell session in the server container"
 	@echo "  |_ bash-spa                    - Start a shell session in the spa container"
 	@echo "  |_ rserver                     - Run a command in the server container"
