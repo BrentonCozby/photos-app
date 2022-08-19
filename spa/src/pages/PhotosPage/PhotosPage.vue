@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores'
 import { authService } from '@/services'
 import { getAxiosErrorData } from '@/utils'
 import { I_Photo } from '@/types'
-import PhotoList from '@/components/PhotoList.vue'
+import PhotoList from '@/components/PhotoList/PhotoList.vue'
 
 const authStore = useAuthStore()
 const photosQuery = usePhotosQuery()
