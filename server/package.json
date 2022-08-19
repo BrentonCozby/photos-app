@@ -13,6 +13,7 @@
     "prisma:migrate": "dotenv -e ../.env -- npx prisma migrate dev",
     "prisma:generate": "dotenv -e ../.env -- npx prisma generate",
     "prisma:studio": "dotenv -e ../.env -- npx prisma studio",
+    "prisma:format": "dotenv -e ../.env -- npx prisma format",
     "test": "jest ./",
     "test:watch": "jest ./ --watch"
   },
@@ -22,7 +23,7 @@
   },
   "dependencies": {
     "@braintree/sanitize-url": "^6.0.0",
-    "@prisma/client": "^3.14.0",
+    "@prisma/client": "^4.2.1",
     "@types/cors": "^2.8.12",
     "@types/dotenv-flow": "^3.2.0",
     "@types/express": "^4.17.13",
@@ -42,7 +43,6 @@
     "json-api-serializer": "^2.6.6",
     "lodash": "^4.17.21",
     "pg": "^8.7.3",
-    "prisma": "^3.14.0",
     "sanitize-html": "^2.7.0",
     "stoppable": "^1.1.0",
     "swagger-jsdoc": "^6.2.1",
@@ -63,6 +63,7 @@
     "husky": "^8.0.1",
     "jest": "^28.1.0",
     "nodemon": "^2.0.16",
+    "prisma": "^4.2.1",
     "supertest": "^6.2.3",
     "ts-jest": "^28.0.3"
   }
