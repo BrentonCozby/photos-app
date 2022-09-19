@@ -15,11 +15,15 @@ export function getAxiosErrorData(error: unknown): I_JsonError {
   }
 
   const axiosError = error as AxiosError
-  const errorData: string | I_JsonErrorDocument = axiosError.response?.data || {}
+  const errorData: unknown | string | I_JsonErrorDocument = axiosError.response?.data || {}
 
   if (typeof errorData === 'string') {
     return { detail: (error as Error).message }
   }
 
-  return errorData.errors[0]
+  if (errorData instanceof Object && errorData.hasOwnProperty('errors')) {
+    return (errorData as I_JsonErrorDocument).errors[0]
+  }
+
+  return { detail: JSON.stringify(errorData) }
 }

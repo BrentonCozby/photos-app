@@ -1,15 +1,19 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "useDefineForClassFields": true,
-    "module": "esnext",
-    "jsx": "preserve",
-    "lib": ["esnext", "dom"],
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@root/*": ["./*"],
-    }
+    },
+    "types": [
+      "vite/client",
+      "node"
+    ],
+    "baseUrl": ".",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",
