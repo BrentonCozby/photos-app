@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/BrentonCozby/photos-app#readme",
   "files": [
+    "constants",
     "types",
     "httpStatuses.ts",
     ".eslintrc.js",
