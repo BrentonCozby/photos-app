@@ -26,6 +26,7 @@ module.exports = {
   ignorePatterns: [
     '.eslintrc.js',
     'jest.config.js',
+    'dist',
   ],
 
   rules: {
