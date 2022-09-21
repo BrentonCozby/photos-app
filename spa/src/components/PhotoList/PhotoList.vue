@@ -13,7 +13,7 @@ defineProps<{
       <div style="margin-left: 12px; flex: 1;">
         <h3 style="margin-top: 0;">{{ photo.name }}</h3>
         <p>{{ photo.description }}</p>
-        <small>Created: {{ new Date(photo.createdAt) }}</small>
+        <small>Created: {{ new Date(photo.createdAt).toLocaleString() }}</small>
       </div>
     </div>
   </div>
