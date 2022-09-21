@@ -14,15 +14,7 @@ export const addOne = async (args: {
     },
   })
 
-  const createPhotoData: any = {
-    ...photo,
-  }
-
-  if (createPhotoData.url) {
-    delete createPhotoData.url
-  }
-
   return await prisma.photo.create({
-    data: createPhotoData,
+    data: photo,
   })
 }

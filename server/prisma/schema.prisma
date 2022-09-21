@@ -13,12 +13,13 @@ model PhotoHash {
 }
 
 model Photo {
-  id            String    @id
-  name          String    @db.VarChar(128)
-  createdAt     DateTime
-  updatedAt     DateTime
-  contentHash   String    @db.VarChar(255)
-  description   String    @db.VarChar(255)
-  isArchived    Boolean   @default(false)
-  photoHashHash PhotoHash @relation(fields: [contentHash], references: [hash])
+  id                   String    @id
+  name                 String    @db.VarChar(128)
+  createdAt            DateTime
+  updatedAt            DateTime
+  contentHash          String    @db.VarChar(255)
+  description          String    @db.VarChar(255)
+  isArchived           Boolean   @default(false)
+  largestSizeAvailable String    @db.VarChar(64)
+  photoHashHash        PhotoHash @relation(fields: [contentHash], references: [hash])
 }

@@ -11,11 +11,10 @@ export const useCreatePhotoMutation = () => {
 
   async function mutationFunction(args: {
     photoData: I_PhotoNew
-    photoFile?: any
   }) {
-    const { photoData, photoFile } = args
+    const { photoData } = args
 
-    return PhotoService.postOne({ photoData, photoFile })
+    return PhotoService.postOne({ photoData })
   }
 
   return useMutation(mutationFunction, {

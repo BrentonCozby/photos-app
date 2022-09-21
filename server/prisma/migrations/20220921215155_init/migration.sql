@@ -14,6 +14,7 @@ CREATE TABLE "Photo" (
     "contentHash" VARCHAR(255) NOT NULL,
     "description" VARCHAR(255) NOT NULL,
     "isArchived" BOOLEAN NOT NULL DEFAULT false,
+    "largestSizeAvailable" VARCHAR(64) NOT NULL,
 
     CONSTRAINT "Photo_pkey" PRIMARY KEY ("id")
 );

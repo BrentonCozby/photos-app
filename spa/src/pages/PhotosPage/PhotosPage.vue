@@ -28,12 +28,16 @@ async function onDeletePhoto(e: Event) {
 async function onFileUpload(e: Event) {
   const target = e.target as HTMLInputElement
 
+  if (!target?.files?.[0]) {
+    throw new Error('Invalid file')
+  }
+
   createPhotoMutation.mutate({
     photoData: {
       name: 'Zebra Ted',
       description: 'A slow zebra',
+      file: target?.files?.[0],
     },
-    photoFile: target?.files?.[0],
   })
 
   if (photoFileInput.value) {

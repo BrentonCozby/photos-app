@@ -2,11 +2,11 @@ import { sanitizeText } from '@/utils'
 import { RequiredError, ValidationError } from '@/errors'
 import { I_Photo } from '@/types'
 import { createId, isValidId } from '@/utils'
-import { CLOUDFRONT_BASE, PHOTOS_FILEPATH_BASE } from '@/constants'
 import Jimp from 'jimp'
 
 interface I_MakePhotoArgs extends Partial<I_Photo> {
   description: I_Photo['description']
+  fileBuffer?: Buffer
   name: I_Photo['name']
 }
 
@@ -17,6 +17,8 @@ export async function makePhoto(args: I_MakePhotoArgs) {
     description,
     fileBuffer,
     id = createId(),
+    isArchived = false,
+    largestSizeAvailable = 'xs',
     name,
     updatedAt = '',
   } = args
@@ -52,10 +54,10 @@ export async function makePhoto(args: I_MakePhotoArgs) {
     createdAt: createdAt || timestamp,
     description: sanitizeText(description),
     id,
-    isArchived: false,
+    isArchived,
+    largestSizeAvailable,
     name: sanitizeText(name),
     updatedAt: updatedAt || timestamp,
-    url: `${CLOUDFRONT_BASE}/${PHOTOS_FILEPATH_BASE}/${contentHash || newContentHash}`,
   }
 
   return Object.freeze(newPhoto)
