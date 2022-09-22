@@ -1,17 +1,11 @@
 import { authService, photoService } from '@/services'
 import { I_Photo, T_Controller, T_ExpressHandler } from '@/types'
-import { toHttpResponse, toExpressHandler } from '@/utils'
+import { toHttpResponse } from '@/utils'
+import { toExpressHandler } from '@/controllers/utils'
 import JSONAPISerializer from 'json-api-serializer'
 
 const getManyPhotos: T_Controller = async () => {
-  let photos: I_Photo[]
-
-  try {
-    photos = await photoService.getMany()
-  } catch (error) {
-    console.log('TODO: respond with error response')
-    throw error
-  }
+  const photos = await photoService.getMany()
 
   const Serializer = new JSONAPISerializer()
 

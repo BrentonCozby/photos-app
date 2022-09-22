@@ -101,7 +101,7 @@ export interface I_JsonLinks {
  * A meta object
  * @see https://jsonapi.org/format/#document-meta
  */
-export interface I_JsonMeta<T = unknown> {
-  [key: string]: Partial<T>
+export interface I_JsonMeta<T = any> {
+  [key: string]: T
 }
 

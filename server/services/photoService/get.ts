@@ -1,6 +1,7 @@
 import { prisma } from '@/db'
 import { I_Photo } from '@/types'
 import { makePhoto } from '@/entities'
+import { RequiredError } from '@/errors'
 
 export const getHash = async (args: {
   contentHash: I_Photo['contentHash']
@@ -8,6 +9,10 @@ export const getHash = async (args: {
   const {
     contentHash,
   } = args
+
+  if (!contentHash) {
+    throw new RequiredError({ fieldName: 'contentHash', value: contentHash })
+  }
 
   return await prisma.photoHash.findUnique({
     where: {
@@ -23,6 +28,10 @@ export const getDuplicates = async (args: {
     contentHash,
   } = args
 
+  if (!contentHash) {
+    throw new RequiredError({ fieldName: 'contentHash', value: contentHash })
+  }
+
   return await prisma.photo.findMany({
     where: {
       contentHash: contentHash,
@@ -36,6 +45,10 @@ export const getOne = async (args: {
   const {
     id,
   } = args
+
+  if (!id) {
+    throw new RequiredError({ fieldName: 'id', value: id })
+  }
 
   const dbResponse = await prisma.photo.findUnique({
     where: {

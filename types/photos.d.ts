@@ -4,7 +4,7 @@ export interface I_Photo {
   description: string
   id: string
   isArchived: boolean
-  largestSizeAvailable: T_PhotoSizes
+  largestSizeAvailable: T_PhotoSizes | string
   name: string
   updatedAt: Date | string
 }

@@ -3,6 +3,9 @@ import express, { Express } from 'express'
 export * from '@/../types'
 
 export type T_ExpressHandler = express.Handler
+export type T_ExpressErrorHandler = express.ErrorRequestHandler
+
+export type T_File = Express.Multer.File
 
 export interface I_HttpHeaders {
   [key: string]: string | string[] | undefined
@@ -10,8 +13,8 @@ export interface I_HttpHeaders {
 
 export interface I_HttpRequest<B = any> {
   body?: B
-  file?: Express.Multer.File
-  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] }
+  file?: T_File
+  files?: T_File[] | { [fieldname: string]: T_File[] }
   headers: I_HttpHeaders
   ip: string
   method: string

@@ -1,7 +1,6 @@
-import { T_Controller, T_ErrorController, I_HttpRequest } from '@/types'
-import express, { ErrorRequestHandler } from 'express'
+import { T_Controller, T_ErrorController, I_HttpRequest, T_ExpressHandler, T_ExpressErrorHandler } from '@/types'
 
-type toExpressHandlerType = (controller: T_Controller) => express.Handler
+type toExpressHandlerType = (controller: T_Controller) => T_ExpressHandler
 
 export const toExpressHandler: toExpressHandlerType = (controller) => {
   return async (req, res, next) => {
@@ -36,12 +35,14 @@ export const toExpressHandler: toExpressHandlerType = (controller) => {
   }
 }
 
-type toExpressErrorHandlerType = (controller: T_ErrorController) => ErrorRequestHandler
+type toExpressErrorHandlerType = (controller: T_ErrorController) => T_ExpressErrorHandler
 
 export const toExpressErrorHandler: toExpressErrorHandlerType = (controller) => {
   return async (err, req, res, next) => {
     const httpRequest: I_HttpRequest = {
       body: req.body,
+      file: req.file,
+      files: req.files,
       query: req.query,
       pathParams: req.params,
       ip: req.ip,

@@ -28,6 +28,9 @@ export class ValidationError extends BasicError {
       options,
       meta: {
         about: 'photosapp.com/errors/PAE-1',
+        fieldName,
+        value,
+        message,
         ...meta,
       },
       source,
@@ -61,6 +64,8 @@ export class RequiredError extends BasicError {
       options,
       meta: {
         about: 'photosapp.com/errors/PAE-2',
+        fieldName,
+        value,
         ...meta,
       },
       source,
@@ -159,6 +164,8 @@ export class StaleDataError extends BasicError {
       options,
       meta: {
         about: 'photosapp.com/errors/PAE-5',
+        resourceName,
+        staleField,
         ...meta,
       },
       source,

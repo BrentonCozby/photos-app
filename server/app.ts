@@ -6,7 +6,7 @@ import helmet from 'helmet'
 import { mainRouter } from '@/routes'
 import { IS_PROD } from '@/constants'
 import { errorHandlers } from '@/errors'
-import { toExpressErrorHandler } from '@/utils'
+import { toExpressErrorHandler } from '@/controllers/utils'
 
 async function createApp() {
   const app = express()
