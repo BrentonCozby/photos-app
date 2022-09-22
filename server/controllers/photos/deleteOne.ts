@@ -1,9 +1,10 @@
-import { authService, photoService } from '@/services'
+import { authService, photoService, s3Service } from '@/services'
 import { Prisma } from '@prisma/client'
-import { T_Controller, T_ExpressHandler } from '@/types'
+import { T_Controller, T_ExpressHandler, T_PhotoSizes } from '@/types'
 import { NotFoundError } from '@/errors'
 import { toHttpResponse, toExpressHandler } from '@/utils'
 import { PhotoSerializer } from './serializers'
+import { SIZES_CONFIG, PHOTOS_FILEPATH_BASE } from '@/constants'
 import JSONAPISerializer from 'json-api-serializer'
 
 const deleteOnePhoto: T_Controller = async (request) => {
@@ -21,6 +22,20 @@ const deleteOnePhoto: T_Controller = async (request) => {
         body: PhotoSerializer.serializeError(notFoundError),
       })
     }
+
+    // remove photos variants from aws
+    const largestConfig = SIZES_CONFIG[photo.largestSizeAvailable]
+    const sizes = Object.entries(SIZES_CONFIG).reduce((acc, [size, config]) => {
+      if (config.width <= largestConfig.width && config.height <= largestConfig.height) {
+        acc.push(size as T_PhotoSizes)
+      }
+
+      return acc
+    }, [] as T_PhotoSizes[])
+
+    await s3Service.deleteObjects({
+      keys: sizes.map((size) => `${PHOTOS_FILEPATH_BASE}/${photo.contentHash}-${size}.webp`),
+    })
 
     await photoService.removeOne(photo)
 

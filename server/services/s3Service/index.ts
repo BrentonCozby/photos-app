@@ -1,5 +1,11 @@
-import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3'
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectsCommand,
+} from '@aws-sdk/client-s3'
 import { MAIN_BUCKET } from '@/constants'
+import { RequiredError } from '@/errors'
 
 let client: S3Client
 
@@ -49,7 +55,40 @@ export async function getObject(args: {
   return getClient().send(command)
 }
 
+export async function deleteObjects(args: {
+  keys: string[]
+}) {
+  const { keys } = args
+
+  if (!keys.length) {
+    throw new RequiredError({ fieldName: 'keys', value: keys })
+  }
+
+  const command = new DeleteObjectsCommand({
+    Bucket: MAIN_BUCKET,
+    Delete: {
+      Objects: keys.map((key) => ({ Key: key })),
+    },
+  })
+
+  let response
+
+  try {
+    response = await getClient().send(command)
+  } catch (error) {
+    if (error instanceof TypeError && error.message === '(0 , entities_1.decodeHTML) is not a function') {
+      console.log('AWS decodeHTML TypeError happened again: https://github.com/aws/aws-sdk-js-v3/issues/3975')
+      return
+    }
+
+    throw error
+  }
+
+  return response
+}
+
 export default {
+  deleteObjects,
   getClient,
   getObject,
   upload,
