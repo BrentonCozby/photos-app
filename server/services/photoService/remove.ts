@@ -19,18 +19,7 @@ export const removeOne = async (args: {
     throw new NotFoundError({ message: 'Photo does not exist.' })
   }
 
-  const hashRecord = await prisma.photoHash.findUnique({
-    where: {
-      hash: photo.contentHash,
-    },
-    include: {
-      _count: {
-        select: {
-          photos: true,
-        },
-      },
-    },
-  })
+  let hashRecord = await getHashWithPhotoCount(photo)
 
   if (!hashRecord) {
     throw new NotFoundError({ message: `PhotoHash record not found for photo id: ${photo.id}` })
@@ -42,6 +31,8 @@ export const removeOne = async (args: {
         id: id,
       },
     })
+
+    hashRecord = await getHashWithPhotoCount(photo)
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
       throw new NotFoundError({ message: 'Photo does not exist.' })
@@ -50,7 +41,7 @@ export const removeOne = async (args: {
     throw error
   }
 
-  if (hashRecord._count.photos === 0) {
+  if (hashRecord?._count.photos === 0) {
     await prisma.photoHash.delete({
       where: {
         hash: photo.contentHash,
@@ -72,4 +63,19 @@ export const removeOne = async (args: {
   })
 
   return photo
+}
+
+function getHashWithPhotoCount(photo: I_Photo) {
+  return prisma.photoHash.findUnique({
+    where: {
+      hash: photo.contentHash,
+    },
+    include: {
+      _count: {
+        select: {
+          photos: true,
+        },
+      },
+    },
+  })
 }

@@ -71,20 +71,7 @@ export async function deleteObjects(args: {
     },
   })
 
-  let response
-
-  try {
-    response = await getClient().send(command)
-  } catch (error) {
-    if (error instanceof TypeError && error.message === '(0 , entities_1.decodeHTML) is not a function') {
-      console.log('AWS decodeHTML TypeError happened again: https://github.com/aws/aws-sdk-js-v3/issues/3975')
-      return
-    }
-
-    throw error
-  }
-
-  return response
+  return await getClient().send(command)
 }
 
 export default {

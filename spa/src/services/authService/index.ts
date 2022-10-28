@@ -1,4 +1,4 @@
-import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js'
+import { createAuth0Client, Auth0Client } from '@auth0/auth0-spa-js'
 import { I_AuthServiceState, T_ListenCb } from './types'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -21,10 +21,12 @@ async function init() {
 
   auth0 = await createAuth0Client({
     domain: String(import.meta.env.VITE_AUTH0_DOMAIN),
-    client_id: String(import.meta.env.VITE_AUTH0_CLIENT_ID),
-    redirect_uri: window.location.origin,
-    audience: String(import.meta.env.VITE_AUTH0_PHOTOS_API_AUD),
-    useRefreshTokens: true,
+    clientId: String(import.meta.env.VITE_AUTH0_CLIENT_ID),
+    // useRefreshTokens: true,
+    authorizationParams: {
+      audience: String(import.meta.env.VITE_AUTH0_PHOTOS_API_AUD),
+      redirect_uri: window.location.origin,
+    },
   }).catch(e => authError = e)
 
   const search = window.location.search
