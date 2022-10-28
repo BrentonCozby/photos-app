@@ -47,8 +47,8 @@ async function onFileUpload(e: Event) {
 </script>
 
 <template>
-  <div :style="{marginBottom: '20px'}">
-    <p v-if="authStore.error" :style="{color: 'red'}">
+  <div class="mb-4">
+    <p v-if="authStore.error" class="text-red-500">
       Auth Error: {{ authStore.error.message }}
     </p>
     <p v-if="authStore.isLoading">
@@ -70,18 +70,18 @@ async function onFileUpload(e: Event) {
       v-if="authStore.isAuthenticated"
       ref="photoFileInput"
       type="file"
-      :style="{marginLeft: '24px'}"
+      class="ml-6"
       @change="onFileUpload"
     />
 
-    <div v-if="photosQuery.data.value?.length" :style="{marginTop: '24px'}">
+    <div v-if="photosQuery.data.value?.length" class="mt-6">
       <form @submit="onDeletePhoto">
-        <input v-model="photoIdToDelete" :style="{marginRight: '6px'}" />
+        <input v-model="photoIdToDelete" class="mr-2" />
         <button type="submit" :disabled="deletePhotoMutation.isLoading.value">
           Delete
         </button>
       </form>
-      <p v-if="deletePhotoMutation.error.value" :style="{color: 'red'}">
+      <p v-if="deletePhotoMutation.error.value" class="text-red-500">
         Error Deleting: {{ getAxiosErrorData(deletePhotoMutation.error.value)?.detail }}
       </p>
     </div>
@@ -90,9 +90,9 @@ async function onFileUpload(e: Event) {
   <p v-if="photosQuery.isLoading.value">Loading photos...</p>
   <p v-if="createPhotoMutation.isLoading.value">Adding photo...</p>
 
-  <div v-if="createPhotoMutation.error.value" :style="{color: 'red'}">
+  <div v-if="createPhotoMutation.error.value" class="text-red-500">
     <div>Failed to add photo:</div>
-    <div style="max-width: 400px; margin: auto;">
+    <div class="max-w-md mx-auto">
       <p>{{ getAxiosErrorData(createPhotoMutation.error.value)?.detail }}</p>
     </div>
   </div>

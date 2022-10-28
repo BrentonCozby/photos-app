@@ -16,7 +16,9 @@ provide('screenWidth', screenWidth)
   <router-view></router-view>
 </template>
 
-<style>
+<style lang="scss">
+@import './styles/main.scss';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <div style="max-width: 400px; margin: auto;">
+  <div class="max-w-md mx-auto">
     <div v-for="photo in photos" style="text-align: left; display: flex; flex-wrap: wrap; align-items: center;">
       <img :src="buildPhotoUrl({ ...photo, size: 'sm' })" :alt="photo.name" :style="{width: `${SIZES_CONFIG.xs.width}px` }" />
       <div style="margin-left: 12px; flex: 1;">
