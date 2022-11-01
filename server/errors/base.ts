@@ -1,5 +1,5 @@
 import { I_ErrorOptions } from '@/errors/types'
-import { I_JsonError } from '@/types'
+import { I_JsonError } from '@/models'
 
 export class BasicError extends Error {
   name: string

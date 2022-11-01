@@ -1,6 +1,6 @@
 import { sanitizeText } from '@/utils'
 import { RequiredError, ValidationError } from '@/errors'
-import { I_Photo } from '@/types'
+import { I_Photo } from '@/models'
 import { createId, isValidId } from '@/utils'
 import Jimp from 'jimp'
 

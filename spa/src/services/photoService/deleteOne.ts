@@ -1,6 +1,6 @@
 import { photosHttp } from './base'
 import { PhotoSerializer } from '@/serializers'
-import { I_Photo } from '@/types'
+import { I_Photo } from '@/models'
 
 export async function deleteOne(args: {
   id: I_Photo['id']

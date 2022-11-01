@@ -1,5 +1,5 @@
 import { prisma } from '@/db'
-import { I_Photo } from '@/types'
+import { I_Photo } from '@/models'
 import { NotFoundError, RequiredError, ValidationError, StaleDataError } from '@/errors'
 import { isEmpty } from 'lodash'
 import { getOne } from './get'

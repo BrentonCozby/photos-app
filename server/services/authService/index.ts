@@ -1,5 +1,5 @@
 import { auth } from 'express-oauth2-jwt-bearer'
-import { T_ExpressHandler } from '@/types'
+import { T_ExpressHandler } from '@/models'
 
 /**
  * Attempts to verify an access token in the request.

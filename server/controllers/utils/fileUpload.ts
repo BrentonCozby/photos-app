@@ -1,7 +1,7 @@
 import multer from 'multer'
 import fs from 'fs'
 import { ValidationError } from '@/errors'
-import { T_ExpressHandler, T_File } from '@/types'
+import { T_ExpressHandler, T_File } from '@/models'
 import { noop, isPlainObject, isEmpty } from 'lodash'
 
 export function fileUpload(args: {

@@ -1,4 +1,4 @@
-import { I_JsonError } from '@/types'
+import { I_JsonError } from '@/models'
 import { I_ErrorOptions } from './types'
 import { BasicError } from './base'
 

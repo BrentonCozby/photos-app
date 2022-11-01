@@ -4,7 +4,7 @@ import { usePhotosQuery, useCreatePhotoMutation, useDeletePhotoMutation } from '
 import { useAuthStore } from '@/stores'
 import { authService } from '@/services'
 import { getAxiosErrorData } from '@/utils'
-import { I_Photo } from '@/types'
+import { I_Photo } from '@/models'
 import PhotoList from '@/components/PhotoList/PhotoList.vue'
 
 const authStore = useAuthStore()

@@ -1,4 +1,4 @@
-import { T_Controller, T_ErrorController, I_HttpRequest, T_ExpressHandler, T_ExpressErrorHandler } from '@/types'
+import { T_Controller, T_ErrorController, I_HttpRequest, T_ExpressHandler, T_ExpressErrorHandler } from '@/models'
 
 type toExpressHandlerType = (controller: T_Controller) => T_ExpressHandler
 

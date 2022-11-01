@@ -9,12 +9,6 @@ export interface I_Photo {
   updatedAt: Date | string
 }
 
-export interface I_PhotoNew {
-  description: string
-  file: File
-  name: string
-}
-
 export interface I_PhotoUpdate extends Partial<I_Photo> {
   id: I_Photo['id']
 }

@@ -1,4 +1,4 @@
-import { T_PhotoSizesConfig } from '../types'
+import { T_PhotoSizesConfig } from '../models'
 
 export const SIZES_CONFIG: T_PhotoSizesConfig = Object.freeze({
   xs: {

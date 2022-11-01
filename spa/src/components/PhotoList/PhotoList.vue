@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { I_Photo } from '@/types'
+import { I_Photo } from '@/models'
 import { SIZES_CONFIG } from '@/constants'
 import { buildPhotoUrl } from '@/utils'
 

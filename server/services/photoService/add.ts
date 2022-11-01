@@ -1,5 +1,5 @@
 import { prisma } from '@/db'
-import { I_Photo, T_File } from '@/types'
+import { I_Photo, T_File } from '@/models'
 import { RequiredError, ValidationError, DuplicationError } from '@/errors'
 import { makePhoto } from '@/entities'
 import { PHOTOS_FILEPATH_BASE, IMAGE_MIME_TYPES } from '@/constants'

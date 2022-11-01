@@ -1,6 +1,6 @@
 import { photosHttp } from './base'
 import { PhotoSerializer } from '@/serializers'
-import { I_PhotoNew, I_Photo } from '@/types'
+import { I_PhotoNew, I_Photo } from '@/models'
 
 export async function postOne(args: {
   photoData: I_PhotoNew

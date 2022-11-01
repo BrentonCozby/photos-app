@@ -1,6 +1,6 @@
 import { photosHttp } from './base'
 import { PhotoSerializer } from '@/serializers'
-import { I_Photo, I_PhotoUpdate } from '@/types'
+import { I_Photo, I_PhotoUpdate } from '@/models'
 
 export async function patchOne(args: {
   photoData: I_PhotoUpdate

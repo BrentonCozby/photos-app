@@ -1,4 +1,4 @@
-import { I_Photo, T_PhotoSizes } from '@/types'
+import { I_Photo, T_PhotoSizes } from '@/models'
 import { CLOUDFRONT_BASE, PHOTOS_FILEPATH_BASE } from '@/constants'
 
 export function buildPhotoUrl(args: {

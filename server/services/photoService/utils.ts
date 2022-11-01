@@ -1,5 +1,5 @@
 import sharp from 'sharp'
-import { T_PhotoSizes } from '@/types'
+import { T_PhotoSizes } from '@/models'
 import { SIZES_CONFIG } from '@/constants'
 
 export async function createSizeVariants(args: {

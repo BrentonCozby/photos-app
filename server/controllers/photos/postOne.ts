@@ -1,5 +1,5 @@
 import { authService, photoService } from '@/services'
-import { T_Controller, T_ExpressHandler } from '@/types'
+import { T_Controller, T_ExpressHandler } from '@/models'
 import { toExpressHandler, fileUpload } from '@/controllers/utils'
 import { toHttpResponse } from '@/utils'
 import { RequiredError, ValidationError } from '@/errors'

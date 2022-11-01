@@ -1,4 +1,4 @@
-import { I_HttpHeaders, I_HttpResponse } from '@/types'
+import { I_HttpHeaders, I_HttpResponse } from '@/models'
 
 const defaultHeaders: I_HttpHeaders = {
   'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import { prisma } from '@/db'
 import { NotFoundError } from '@/errors'
 import { SIZES_CONFIG, PHOTOS_FILEPATH_BASE } from '@/constants'
-import { I_Photo, T_PhotoSizes } from '@/types'
+import { I_Photo, T_PhotoSizes } from '@/models'
 import { Prisma } from '@prisma/client'
 import { s3Service } from '@/services'
 import { getOne } from './get'

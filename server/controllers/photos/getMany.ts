@@ -1,5 +1,5 @@
 import { authService, photoService } from '@/services'
-import { I_Photo, T_Controller, T_ExpressHandler } from '@/types'
+import { I_Photo, T_Controller, T_ExpressHandler } from '@/models'
 import { toHttpResponse } from '@/utils'
 import { toExpressHandler } from '@/controllers/utils'
 import JSONAPISerializer from 'json-api-serializer'

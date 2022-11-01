@@ -1,6 +1,6 @@
 import express, { Express } from 'express'
 
-export * from '@/../types'
+export * from '@/../models'
 
 export type T_ExpressHandler = express.Handler
 export type T_ExpressErrorHandler = express.ErrorRequestHandler
