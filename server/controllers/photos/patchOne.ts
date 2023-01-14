@@ -1,10 +1,11 @@
-import { authService, photoService } from '@/services'
-import { T_Controller, T_ExpressHandler } from '@/models'
-import { RequiredError, ValidationError } from '@/errors'
-import { toHttpResponse } from '@/utils'
-import { toExpressHandler } from '@/controllers/utils'
 import JSONAPISerializer from 'json-api-serializer'
 import isEmpty from 'lodash/isEmpty'
+
+import { toExpressHandler } from '@/controllers/utils'
+import { RequiredError, ValidationError } from '@/errors'
+import { T_Controller, T_ExpressHandler } from '@/models'
+import { authService, photoService } from '@/services'
+import { toHttpResponse } from '@/utils'
 
 const patchOnePhoto: T_Controller = async (request) => {
   const missingParams = ['oldValues', 'newValues'].filter(name => isEmpty(request.body[name]))

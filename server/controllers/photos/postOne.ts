@@ -1,9 +1,10 @@
-import { authService, photoService } from '@/services'
-import { T_Controller, T_ExpressHandler } from '@/models'
-import { toExpressHandler, fileUpload } from '@/controllers/utils'
-import { toHttpResponse } from '@/utils'
-import { RequiredError, ValidationError } from '@/errors'
 import JSONAPISerializer from 'json-api-serializer'
+
+import { fileUpload, toExpressHandler } from '@/controllers/utils'
+import { RequiredError, ValidationError } from '@/errors'
+import { T_Controller, T_ExpressHandler } from '@/models'
+import { authService, photoService } from '@/services'
+import { toHttpResponse } from '@/utils'
 
 const postPhoto: T_Controller = async (request) => {
   const { file, body } = request

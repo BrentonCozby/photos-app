@@ -8,6 +8,7 @@ module.exports = {
 
   plugins: [
     '@typescript-eslint',
+    'simple-import-sort',
   ],
 
   parser: '@typescript-eslint/parser',
@@ -42,6 +43,7 @@ module.exports = {
     // on
     '@typescript-eslint/indent': ['error', 2], // in place of 'indent'
     'comma-dangle': ['error', 'always-multiline'],
+    'comma-spacing': ['error', { 'after': true }],
     'object-curly-spacing': ['error', 'always'],
     'quotes': ['error', 'single'],
     'semi': ['error', 'never'],
@@ -49,5 +51,29 @@ module.exports = {
     'no-throw-literal': ['error'],
     'no-useless-catch': ['error'],
     'no-multi-spaces': ['error'],
+    'simple-import-sort/imports': [
+      'error',
+      {
+        // Custom Grouping: https://github.com/lydell/eslint-plugin-simple-import-sort#custom-grouping
+        // Examples: https://github.com/lydell/eslint-plugin-simple-import-sort/blob/main/examples/.eslintrc.js
+        groups: [
+          // Side effect imports.
+          ['^\\u0000'],
+          // Node.js builtins prefixed with `node:`.
+          ['^node:'],
+          // Packages.
+          // Things that start with a letter (or digit or underscore), or `@` and is not followed by legacy|test|fixtures.
+          // then followed by letter digit or whitespace (supports our aliases)
+          ['^(\\w|@(?!legacy|test|fixtures)\\w)'],
+          // Absolute imports and other imports such as Vue-style `@/foo`.
+          // Anything not matched in another group.
+          ['^'],
+          // Relative imports.
+          // Anything that starts with a dot.
+          ['^\\.'],
+        ],
+      },
+    ],
+    'simple-import-sort/exports': 'error',
   },
 }

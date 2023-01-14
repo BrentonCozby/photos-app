@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from 'vue-query'
-import * as PhotoService from '@/services/photoService'
+
 import { I_PhotoNew } from '@/models'
+import * as PhotoService from '@/services/photoService'
 
 /**
  * Create a new photo

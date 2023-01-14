@@ -1,7 +1,9 @@
 import { UnauthorizedError } from 'express-oauth2-jwt-bearer'
-import { toHttpResponse } from '@/utils'
 import JSONAPISerializer from 'json-api-serializer'
+
 import { T_ErrorController } from '@/models'
+import { toHttpResponse } from '@/utils'
+
 import { DuplicationError, NotFoundError, RequiredError, StaleDataError, ValidationError } from './validation'
 
 const ErrorSerializer = new JSONAPISerializer()

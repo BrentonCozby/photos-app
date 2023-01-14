@@ -1,4 +1,5 @@
 import express from 'express'
+
 import * as photos from '@/controllers/photos'
 
 const mainRouter = express.Router()

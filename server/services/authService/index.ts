@@ -1,4 +1,5 @@
 import { auth } from 'express-oauth2-jwt-bearer'
+
 import { T_ExpressHandler } from '@/models'
 
 /**

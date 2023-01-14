@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from 'vue-query'
-import * as PhotoService from '@/services/photoService'
+
 import { I_Photo } from '@/models'
+import * as PhotoService from '@/services/photoService'
 
 /**
  * Delete a photo

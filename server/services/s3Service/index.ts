@@ -1,9 +1,10 @@
 import {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
   DeleteObjectsCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
 } from '@aws-sdk/client-s3'
+
 import { MAIN_BUCKET } from '@/constants'
 import { RequiredError } from '@/errors'
 

@@ -1,9 +1,11 @@
+import { Prisma } from '@prisma/client'
+
+import { PHOTOS_FILEPATH_BASE, SIZES_CONFIG } from '@/constants'
 import { prisma } from '@/db'
 import { NotFoundError } from '@/errors'
-import { SIZES_CONFIG, PHOTOS_FILEPATH_BASE } from '@/constants'
 import { I_Photo, T_PhotoSizes } from '@/models'
-import { Prisma } from '@prisma/client'
 import { s3Service } from '@/services'
+
 import { getOne } from './get'
 
 export const removeOne = async (args: {

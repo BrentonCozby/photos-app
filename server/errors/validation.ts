@@ -1,6 +1,7 @@
 import { I_JsonError } from '@/models'
-import { I_ErrorOptions } from './types'
+
 import { BasicError } from './base'
+import { I_ErrorOptions } from './types'
 
 export class ValidationError extends BasicError {
   name: string

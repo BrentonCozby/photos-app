@@ -1,8 +1,9 @@
-import { authService, photoService } from '@/services'
-import { T_Controller, T_ExpressHandler } from '@/models'
-import { toHttpResponse } from '@/utils'
-import { toExpressHandler } from '@/controllers/utils'
 import JSONAPISerializer from 'json-api-serializer'
+
+import { toExpressHandler } from '@/controllers/utils'
+import { T_Controller, T_ExpressHandler } from '@/models'
+import { authService, photoService } from '@/services'
+import { toHttpResponse } from '@/utils'
 
 const deleteOnePhoto: T_Controller = async (request) => {
   const photo = await photoService.removeOne({ id: request.pathParams.id })

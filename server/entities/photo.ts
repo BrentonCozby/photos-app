@@ -1,8 +1,9 @@
-import { sanitizeText } from '@/utils'
+import Jimp from 'jimp'
+
 import { RequiredError, ValidationError } from '@/errors'
 import { I_Photo } from '@/models'
+import { sanitizeText } from '@/utils'
 import { createId, isValidId } from '@/utils'
-import Jimp from 'jimp'
 
 interface I_MakePhotoArgs extends Partial<I_Photo> {
   description: I_Photo['description']

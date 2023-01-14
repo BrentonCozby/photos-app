@@ -1,4 +1,4 @@
-import { User, IdToken } from '@auth0/auth0-spa-js'
+import { IdToken, User } from '@auth0/auth0-spa-js'
 
 export interface I_AuthServiceState {
   isLoading: boolean

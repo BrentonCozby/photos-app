@@ -1,6 +1,7 @@
-import { createAuth0Client, Auth0Client } from '@auth0/auth0-spa-js'
-import { I_AuthServiceState, T_ListenCb } from './types'
+import { Auth0Client, createAuth0Client } from '@auth0/auth0-spa-js'
 import cloneDeep from 'lodash/cloneDeep'
+
+import { I_AuthServiceState, T_ListenCb } from './types'
 
 let auth0: Auth0Client
 

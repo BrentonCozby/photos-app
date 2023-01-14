@@ -1,8 +1,9 @@
-import { authService, photoService } from '@/services'
-import { I_Photo, T_Controller, T_ExpressHandler } from '@/models'
-import { toHttpResponse } from '@/utils'
-import { toExpressHandler } from '@/controllers/utils'
 import JSONAPISerializer from 'json-api-serializer'
+
+import { toExpressHandler } from '@/controllers/utils'
+import { I_Photo, T_Controller, T_ExpressHandler } from '@/models'
+import { authService, photoService } from '@/services'
+import { toHttpResponse } from '@/utils'
 
 const getManyPhotos: T_Controller = async () => {
   const photos = await photoService.getMany()

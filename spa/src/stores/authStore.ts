@@ -1,6 +1,7 @@
+import { IdToken, User } from '@auth0/auth0-spa-js'
 import { defineStore } from 'pinia'
-import { ref, Ref } from 'vue'
-import { User, IdToken } from '@auth0/auth0-spa-js'
+import { Ref, ref } from 'vue'
+
 import { authService } from '@/services'
 
 export const useAuthStore = defineStore('auth', () => {

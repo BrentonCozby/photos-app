@@ -46,12 +46,12 @@ logs: ## Run the logs for all containers
 .PHONY: lint
 lint: ## Lint everything
 	@echo "Linting Photos App..."
-	docker-compose run --rm server sh -c 'npm run lint'
+	docker-compose run --rm server sh -c 'cd .. && npm run lint'
 
 .PHONY: lint-fix
 lint-fix: ## Lint everything and auto-fix errors
 	@echo "Linting Photos App and fixing errors..."
-	docker-compose run --rm server sh -c 'npm run lint:fix'
+	docker-compose run --rm server sh -c 'cd .. && npm run lint:fix'
 
 .PHONY: build-server
 build-server: ## Build Docker image for server

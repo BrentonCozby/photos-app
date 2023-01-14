@@ -1,8 +1,9 @@
-import multer from 'multer'
 import fs from 'fs'
+import { isEmpty, isPlainObject, noop } from 'lodash'
+import multer from 'multer'
+
 import { ValidationError } from '@/errors'
 import { T_ExpressHandler, T_File } from '@/models'
-import { noop, isPlainObject, isEmpty } from 'lodash'
 
 export function fileUpload(args: {
   filename?: string,

@@ -1,8 +1,9 @@
 import { computed } from 'vue'
 import { useQuery, UseQueryOptions } from 'vue-query'
-import { useAuthStore } from '@/stores'
-import * as PhotoService from '@/services/photoService'
+
 import { I_Photo } from '@/models'
+import * as PhotoService from '@/services/photoService'
+import { useAuthStore } from '@/stores'
 
 /**
  * Get one or many photos. Returns one photo if the `id` param is passed.

@@ -1,6 +1,7 @@
 import * as VueRouter from 'vue-router'
-import PhotosPage from '@/pages/PhotosPage/PhotosPage.vue'
+
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage.vue'
+import PhotosPage from '@/pages/PhotosPage/PhotosPage.vue'
 
 const routes: VueRouter.RouteRecordRaw[] = [
   { path: '/', name: 'PhotosPage', component: PhotosPage },

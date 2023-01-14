@@ -1,7 +1,7 @@
 import { prisma } from '@/db'
-import { I_Photo } from '@/models'
 import { makePhoto } from '@/entities'
 import { RequiredError } from '@/errors'
+import { I_Photo } from '@/models'
 
 export const getHash = async (args: {
   contentHash: I_Photo['contentHash']

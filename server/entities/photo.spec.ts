@@ -1,6 +1,8 @@
-import { makePhoto } from './photo'
-import { RequiredError } from '@/errors'
 import fs from 'fs'
+
+import { RequiredError } from '@/errors'
+
+import { makePhoto } from './photo'
 
 describe('makePhoto', () => {
   let testPhoto: Buffer

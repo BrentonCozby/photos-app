@@ -1,12 +1,14 @@
-import path from 'path'
-import express from 'express'
-import cors from 'cors'
 import 'express-async-errors'
+
+import cors from 'cors'
+import express from 'express'
 import helmet from 'helmet'
-import { mainRouter } from '@/routes'
+import path from 'path'
+
 import { IS_PROD } from '@/constants'
-import { errorHandlers } from '@/errors'
 import { toExpressErrorHandler } from '@/controllers/utils'
+import { errorHandlers } from '@/errors'
+import { mainRouter } from '@/routes'
 
 async function createApp() {
   const app = express()

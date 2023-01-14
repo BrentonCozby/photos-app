@@ -1,5 +1,5 @@
-import path from 'path'
 import dotenvFlow from 'dotenv-flow'
+import path from 'path'
 
 // add the .env file(s) to process.env
 dotenvFlow.config({
@@ -9,6 +9,7 @@ dotenvFlow.config({
 // import other modules that might rely on process.env
 import stoppable from 'stoppable'
 import { promisify } from 'util'
+
 import createApp from './app'
 
 const PORT = Number(process.env.SERVER_PORT) || 3000

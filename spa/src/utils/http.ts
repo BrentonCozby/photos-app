@@ -1,5 +1,6 @@
-import { I_JsonError, I_JsonErrorDocument } from '@/models'
 import { AxiosError } from 'axios'
+
+import { I_JsonError, I_JsonErrorDocument } from '@/models'
 
 export function isAxiosError(error: unknown): boolean {
   if (error instanceof Error) {
