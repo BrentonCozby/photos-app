@@ -1,57 +1,70 @@
-import fs from 'fs'
-
-import { RequiredError } from '@/errors'
+import { RequiredError, ValidationError } from '@/errors'
 
 import { makePhoto } from './photo'
 
+const contentHash = '8lkeAK5d1x2'
+
 describe('makePhoto', () => {
-  let testPhoto: Buffer
-
-  beforeEach(() => {
-    testPhoto = fs.readFileSync('./entities/test-photo.jpg')
-  })
-
-  it('returns a frozen photo object', async () => {
+  it('returns a frozen photo object', () => {
     'use strict'
-    const photo = await makePhoto({
+    const photo = makePhoto({
       name: 'foo',
       description: 'a photo',
-      fileBuffer: testPhoto,
+      contentHash,
     })
 
     // @ts-expect-error "cannot assign name because it is read-only"
     expect(() => photo.name = 'bar').toThrow(TypeError)
   })
 
-  it('must have a description', async () => {
+  it('must have a description', () => {
     // @ts-expect-error "missing properties"
-    await expect(() => makePhoto({
+    expect(() => makePhoto({
       name: 'foo',
-      fileBuffer: testPhoto,
-    })).rejects.toThrow(new RequiredError({ fieldName: 'description', value: undefined }))
-    await expect(() => makePhoto({
+      contentHash,
+    })).toThrow(new RequiredError({ fieldName: 'description', value: undefined }))
+    expect(() => makePhoto({
       name: 'foo',
       description: '   ',
-    })).rejects.toThrow(new RequiredError({ fieldName: 'description', value: '   ' }))
+      contentHash,
+    })).toThrow(new RequiredError({ fieldName: 'description', value: '   ' }))
   })
 
-  it('must have a name', async () => {
+  it('must have a name', () => {
     // @ts-expect-error "missing properties"
-    await expect(() => makePhoto({
+    expect(() => makePhoto({
       description: 'a photo',
-      fileBuffer: testPhoto,
-    })).rejects.toThrow(new RequiredError({ fieldName: 'name', value: undefined }))
-    await expect(() => makePhoto({
+      contentHash,
+    })).toThrow(new RequiredError({ fieldName: 'name', value: undefined }))
+    expect(() => makePhoto({
       description: 'a photo',
       name: '   ',
-    })).rejects.toThrow(new RequiredError({ fieldName: 'name', value: '   ' }))
+      contentHash,
+    })).toThrow(new RequiredError({ fieldName: 'name', value: '   ' }))
   })
 
-  it('sanitizes the name and description', async () => {
-    const photo = await makePhoto({
+  it('must have a content hash', () => {
+    // @ts-expect-error "missing properties"
+    expect(() => makePhoto({
+      description: 'a photo',
+      name: 'foo',
+    })).toThrow(new RequiredError({ fieldName: 'contentHash', value: undefined }))
+  })
+
+  it('must have a cuid for an id', () => {
+    expect(() => makePhoto({
+      description: 'a photo',
+      id: 'not-a-cuid',
+      name: 'foo',
+      contentHash,
+    })).toThrow(new ValidationError({ fieldName: 'id', value: 'not-a-cuid', message: 'Must be a cuid' }))
+  })
+
+  it('sanitizes the name and description', () => {
+    const photo = makePhoto({
       name: '<b onerror="alert(`XSS`">foo</b>',
       description: 'a photo <script src="alert(`foo`)">doSomeEvil()</script>',
-      fileBuffer: testPhoto,
+      contentHash,
     })
 
     expect(photo.name).toBe('<b>foo</b>')

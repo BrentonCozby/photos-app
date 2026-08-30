@@ -59,7 +59,7 @@ export const getOne = async (args: {
   let response: I_Photo | null = null
 
   if (dbResponse) {
-    response = await makePhoto(dbResponse)
+    response = makePhoto(dbResponse)
   }
 
   return response
@@ -79,7 +79,7 @@ export const getMany = async (args?: {
   let response: I_Photo[] = []
 
   if (dbResponse?.length) {
-    response = await Promise.all(dbResponse.map(makePhoto))
+    response = dbResponse.map((photo) => makePhoto(photo))
   }
 
   return response

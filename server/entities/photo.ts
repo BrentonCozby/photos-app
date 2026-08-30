@@ -1,22 +1,18 @@
-import Jimp from 'jimp'
-
 import { RequiredError, ValidationError } from '@/errors'
 import { I_Photo } from '@/models'
-import { sanitizeText } from '@/utils'
-import { createId, isValidId } from '@/utils'
+import { createId, isValidId, sanitizeText } from '@/utils'
 
 interface I_MakePhotoArgs extends Partial<I_Photo> {
+  contentHash: I_Photo['contentHash']
   description: I_Photo['description']
-  fileBuffer?: Buffer
   name: I_Photo['name']
 }
 
-export async function makePhoto(args: I_MakePhotoArgs) {
+export function makePhoto(args: I_MakePhotoArgs) {
   const {
-    contentHash = '',
+    contentHash,
     createdAt = '',
     description,
-    fileBuffer,
     id = createId(),
     isArchived = false,
     largestSizeAvailable = 'xs',
@@ -36,22 +32,14 @@ export async function makePhoto(args: I_MakePhotoArgs) {
     throw new RequiredError({ fieldName: 'description', value: description })
   }
 
-  if (!contentHash && !fileBuffer) {
-    throw new ValidationError({ fieldName: 'fileBuffer', value: fileBuffer, message: 'If no contentHash is provided, fileBuffer is required.' })
-  }
-
-  let newContentHash = ''
-
   if (!contentHash) {
-    const jimpInstance = await Jimp.read(fileBuffer as Buffer)
-
-    newContentHash = jimpInstance.hash()
+    throw new RequiredError({ fieldName: 'contentHash', value: contentHash })
   }
 
   const timestamp = new Date()
 
   const newPhoto: I_Photo = {
-    contentHash: contentHash || newContentHash,
+    contentHash,
     createdAt: createdAt || timestamp,
     description: sanitizeText(description),
     id,

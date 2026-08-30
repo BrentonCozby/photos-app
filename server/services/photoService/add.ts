@@ -8,7 +8,7 @@ import { I_Photo, T_File } from '@/models'
 import { s3Service } from '@/services'
 
 import { getDuplicates, getHash } from './get'
-import { createSizeVariants } from './utils'
+import { createContentHash, createSizeVariants } from './utils'
 
 export const addOne = async (args: {
   file: T_File
@@ -44,11 +44,12 @@ export const addOne = async (args: {
   }
 
   const fileBuffer = fs.readFileSync(file.path)
+  const contentHash = await createContentHash({ fileBuffer })
 
-  let photo = await makePhoto({
+  let photo = makePhoto({
+    contentHash,
     description: description,
     name: name,
-    fileBuffer,
   })
 
   if (await getHash(photo)) {
@@ -64,7 +65,7 @@ export const addOne = async (args: {
 
   const { sizeVariants, largestSizeAvailable } = await createSizeVariants({ fileBuffer })
 
-  photo = await makePhoto({
+  photo = makePhoto({
     ...photo,
     largestSizeAvailable,
   })
