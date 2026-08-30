@@ -1,9 +1,10 @@
-import { prisma } from '@/db'
 import { makePhoto } from '@/entities'
 import { RequiredError } from '@/errors'
 import { I_Photo } from '@/models'
 
-export const getHash = async (args: {
+import { I_PhotoServiceDeps } from './types'
+
+export const makeGetHash = ({ photoRepository }: I_PhotoServiceDeps) => async (args: {
   contentHash: I_Photo['contentHash']
 }) => {
   const {
@@ -14,14 +15,10 @@ export const getHash = async (args: {
     throw new RequiredError({ fieldName: 'contentHash', value: contentHash })
   }
 
-  return await prisma.photoHash.findUnique({
-    where: {
-      hash: contentHash,
-    },
-  })
+  return await photoRepository.findHash({ contentHash })
 }
 
-export const getDuplicates = async (args: {
+export const makeGetDuplicates = ({ photoRepository }: I_PhotoServiceDeps) => async (args: {
   contentHash: I_Photo['contentHash']
 }) => {
   const {
@@ -32,14 +29,10 @@ export const getDuplicates = async (args: {
     throw new RequiredError({ fieldName: 'contentHash', value: contentHash })
   }
 
-  return await prisma.photo.findMany({
-    where: {
-      contentHash: contentHash,
-    },
-  })
+  return await photoRepository.findPhotosByContentHash({ contentHash })
 }
 
-export const getOne = async (args: {
+export const makeGetOne = ({ photoRepository }: I_PhotoServiceDeps) => async (args: {
   id: I_Photo['id']
 }) => {
   const {
@@ -50,11 +43,7 @@ export const getOne = async (args: {
     throw new RequiredError({ fieldName: 'id', value: id })
   }
 
-  const dbResponse = await prisma.photo.findUnique({
-    where: {
-      id: id,
-    },
-  })
+  const dbResponse = await photoRepository.findPhotoById({ id })
 
   let response: I_Photo | null = null
 
@@ -65,16 +54,14 @@ export const getOne = async (args: {
   return response
 }
 
-export const getMany = async (args?: {
+export const makeGetMany = ({ photoRepository }: I_PhotoServiceDeps) => async (args?: {
   limit?: number
 }) => {
   const {
     limit = 25,
   } = args || {}
 
-  const dbResponse = await prisma.photo.findMany({
-    take: limit,
-  })
+  const dbResponse = await photoRepository.findPhotos({ limit })
 
   let response: I_Photo[] = []
 

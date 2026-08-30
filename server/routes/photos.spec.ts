@@ -9,7 +9,7 @@ jest.mock('@/db/prisma')
 jest.mock('@/services/authService', () => ({
   __esModule: true,
   default: {
-    verifyAccessToken: (req: unknown, res: unknown, next: () => void) => next(),
+    verifyAccessToken: (_req: unknown, _res: unknown, next: () => void) => next(),
   },
 }))
 
@@ -23,7 +23,7 @@ jest.mock('@/services/s3Service', () => ({
   },
 }))
 
-// jest.mock swaps in db/__mocks__/prisma.ts; requireMock hands back that same instance.
+// jest.mock swaps in db/__mocks__/prisma.ts; requireMock returns that same instance.
 const { prisma: mockPrisma } = jest.requireMock<typeof import('@/db/__mocks__/prisma')>('@/db/prisma')
 const mockS3Service = jest.mocked(s3Service)
 
@@ -197,7 +197,17 @@ describe('photos routes', () => {
           updatedAt: expect.any(Date),
         },
       })
-      expect(mockS3Service.upload.mock.calls.map(([args]) => args.filePath).sort()).toMatchSnapshot()
+      const expectedSizes = ['xs', 'sm', 'md']
+
+      expect(mockS3Service.upload).toHaveBeenCalledTimes(expectedSizes.length)
+
+      expectedSizes.forEach((size) => {
+        expect(mockS3Service.upload).toHaveBeenCalledWith({
+          filePath: `photos/${TEST_PHOTO_HASH}-${size}.webp`,
+          content: expect.any(Buffer),
+          mimeType: 'image/webp',
+        })
+      })
     })
 
     it('answers 400 when the upload is missing', async () => {

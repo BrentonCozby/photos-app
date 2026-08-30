@@ -226,11 +226,3 @@ exports[`photos routes POST /photos hashes the upload, stores every size variant
   },
 }
 `;
-
-exports[`photos routes POST /photos hashes the upload, stores every size variant and creates the photo 2`] = `
-[
-  "photos/8lkeAK5d1x2-md.webp",
-  "photos/8lkeAK5d1x2-sm.webp",
-  "photos/8lkeAK5d1x2-xs.webp",
-]
-`;

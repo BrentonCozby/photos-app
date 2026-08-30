@@ -1,9 +1,11 @@
 import authService from './authService'
-import photoService from './photoService'
+import { makePhotoService } from './photoService'
 import s3Service from './s3Service'
+
+export type { T_PhotoService } from './photoService'
 
 export {
   authService,
-  photoService,
+  makePhotoService,
   s3Service,
 }

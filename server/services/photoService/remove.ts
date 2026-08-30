@@ -1,83 +1,55 @@
-import { Prisma } from '@prisma/client'
-
 import { PHOTOS_FILEPATH_BASE, SIZES_CONFIG } from '@/constants'
-import { prisma } from '@/db'
 import { NotFoundError } from '@/errors'
 import { I_Photo, T_PhotoSizes } from '@/models'
-import { s3Service } from '@/services'
+import s3Service from '@/services/s3Service'
 
-import { getOne } from './get'
+import { makeGetOne } from './get'
+import { I_PhotoServiceDeps } from './types'
 
-export const removeOne = async (args: {
-  id: I_Photo['id']
-}) => {
-  const {
-    id,
-  } = args
+export const makeRemoveOne = (deps: I_PhotoServiceDeps) => {
+  const { photoRepository } = deps
+  const getOne = makeGetOne(deps)
 
-  const photo = await getOne({ id })
+  return async (args: {
+    id: I_Photo['id']
+  }) => {
+    const {
+      id,
+    } = args
 
-  if (!photo) {
-    throw new NotFoundError({ message: 'Photo does not exist.' })
-  }
+    const photo = await getOne({ id })
 
-  let hashRecord = await getHashWithPhotoCount(photo)
-
-  if (!hashRecord) {
-    throw new NotFoundError({ message: `PhotoHash record not found for photo id: ${photo.id}` })
-  }
-
-  try {
-    await prisma.photo.delete({
-      where: {
-        id: id,
-      },
-    })
-
-    hashRecord = await getHashWithPhotoCount(photo)
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+    if (!photo) {
       throw new NotFoundError({ message: 'Photo does not exist.' })
     }
 
-    throw error
-  }
+    let hashRecord = await photoRepository.findHashWithPhotoCount({ contentHash: photo.contentHash })
 
-  if (hashRecord?._count.photos === 0) {
-    await prisma.photoHash.delete({
-      where: {
-        hash: photo.contentHash,
-      },
-    })
-  }
-
-  const largestSizeConfig = SIZES_CONFIG[photo.largestSizeAvailable as keyof typeof SIZES_CONFIG]
-  const sizes = Object.entries(SIZES_CONFIG).reduce((acc, [size, config]) => {
-    if (config.width <= largestSizeConfig.width && config.height <= largestSizeConfig.height) {
-      acc.push(size as T_PhotoSizes)
+    if (!hashRecord) {
+      throw new NotFoundError({ message: `PhotoHash record not found for photo id: ${photo.id}` })
     }
 
-    return acc
-  }, [] as T_PhotoSizes[])
+    await photoRepository.deletePhoto({ id })
 
-  s3Service.deleteObjects({
-    keys: sizes.map((size) => `${PHOTOS_FILEPATH_BASE}/${photo.contentHash}-${size}.webp`),
-  })
+    hashRecord = await photoRepository.findHashWithPhotoCount({ contentHash: photo.contentHash })
 
-  return photo
-}
+    if (hashRecord?.photoCount === 0) {
+      await photoRepository.deleteHash({ contentHash: photo.contentHash })
+    }
 
-function getHashWithPhotoCount(photo: I_Photo) {
-  return prisma.photoHash.findUnique({
-    where: {
-      hash: photo.contentHash,
-    },
-    include: {
-      _count: {
-        select: {
-          photos: true,
-        },
-      },
-    },
-  })
+    const largestSizeConfig = SIZES_CONFIG[photo.largestSizeAvailable as keyof typeof SIZES_CONFIG]
+    const sizes = Object.entries(SIZES_CONFIG).reduce((acc, [size, config]) => {
+      if (config.width <= largestSizeConfig.width && config.height <= largestSizeConfig.height) {
+        acc.push(size as T_PhotoSizes)
+      }
+
+      return acc
+    }, [] as T_PhotoSizes[])
+
+    s3Service.deleteObjects({
+      keys: sizes.map((size) => `${PHOTOS_FILEPATH_BASE}/${photo.contentHash}-${size}.webp`),
+    })
+
+    return photo
+  }
 }

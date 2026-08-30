@@ -2,24 +2,26 @@ import JSONAPISerializer from 'json-api-serializer'
 
 import { toExpressHandler } from '@/controllers/utils'
 import { T_Controller, T_ExpressHandler } from '@/models'
-import { authService, photoService } from '@/services'
+import { authService } from '@/services'
 import { toHttpResponse } from '@/utils'
 
-const getOnePhoto: T_Controller = async (request) => {
-  const photo = await photoService.getOne({
-    id: request.pathParams.id,
-  })
+import { I_PhotoControllerDeps } from './types'
 
-  const Serializer = new JSONAPISerializer()
+export default function makeGetOne({ photoService }: I_PhotoControllerDeps): T_ExpressHandler[] {
+  const getOnePhoto: T_Controller = async (request) => {
+    const photo = await photoService.getOne({
+      id: request.pathParams.id,
+    })
 
-  Serializer.register('photo')
+    const Serializer = new JSONAPISerializer()
 
-  return toHttpResponse({ body: Serializer.serialize('photo', photo) })
+    Serializer.register('photo')
+
+    return toHttpResponse({ body: Serializer.serialize('photo', photo) })
+  }
+
+  return [
+    authService.verifyAccessToken,
+    toExpressHandler(getOnePhoto),
+  ]
 }
-
-const handlers: T_ExpressHandler[] = [
-  authService.verifyAccessToken,
-  toExpressHandler(getOnePhoto),
-]
-
-export default handlers

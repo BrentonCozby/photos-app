@@ -37,7 +37,6 @@ module.exports = {
 
   overrides: [
     {
-      // Test files may import devDependencies.
       files: ['**/*.spec.ts', '**/__mocks__/**/*.ts'],
       rules: {
         'node/no-unpublished-import': 'off',
