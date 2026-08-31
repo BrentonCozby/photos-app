@@ -85,6 +85,10 @@ module.exports = {
     doNotFollow: {
       path: 'node_modules',
     },
+    // architecture.spec.ts cruises these on purpose to prove the rules still fire.
+    exclude: {
+      path: '__arch_fixtures__',
+    },
     tsConfig: {
       fileName: 'tsconfig.json',
     },
