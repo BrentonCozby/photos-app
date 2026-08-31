@@ -1,10 +1,9 @@
+import { photoRepository } from '@/db'
 import { makePhoto } from '@/entities'
 import { RequiredError } from '@/errors'
 import { I_Photo } from '@/models'
 
-import { I_PhotoServiceDeps } from './types'
-
-export const makeGetHash = ({ photoRepository }: I_PhotoServiceDeps) => async (args: {
+export const getHash = async (args: {
   contentHash: I_Photo['contentHash']
 }) => {
   const {
@@ -18,7 +17,7 @@ export const makeGetHash = ({ photoRepository }: I_PhotoServiceDeps) => async (a
   return await photoRepository.findHash({ contentHash })
 }
 
-export const makeGetDuplicates = ({ photoRepository }: I_PhotoServiceDeps) => async (args: {
+export const getDuplicates = async (args: {
   contentHash: I_Photo['contentHash']
 }) => {
   const {
@@ -32,7 +31,7 @@ export const makeGetDuplicates = ({ photoRepository }: I_PhotoServiceDeps) => as
   return await photoRepository.findPhotosByContentHash({ contentHash })
 }
 
-export const makeGetOne = ({ photoRepository }: I_PhotoServiceDeps) => async (args: {
+export const getOne = async (args: {
   id: I_Photo['id']
 }) => {
   const {
@@ -54,7 +53,7 @@ export const makeGetOne = ({ photoRepository }: I_PhotoServiceDeps) => async (ar
   return response
 }
 
-export const makeGetMany = ({ photoRepository }: I_PhotoServiceDeps) => async (args?: {
+export const getMany = async (args?: {
   limit?: number
 }) => {
   const {

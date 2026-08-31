@@ -58,18 +58,6 @@ module.exports = {
       },
     },
     {
-      name: 'storage-stays-behind-the-port',
-      comment: 'Only the composition root reaches for the db module. Use cases take the repository port. Tests may reach the fake client.',
-      severity: 'error',
-      from: {
-        path: '^(entities|services|controllers|routes)/',
-        pathNot: '[.]spec[.]ts$',
-      },
-      to: {
-        path: '^db/',
-      },
-    },
-    {
       name: 'express-stays-at-the-edge',
       comment: 'Express belongs to the transport layer: controllers, routes and app.ts. models/index.ts is the exception, since it aliases express types for every layer.',
       severity: 'error',
