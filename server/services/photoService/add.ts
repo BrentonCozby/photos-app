@@ -6,6 +6,7 @@ import { makePhoto } from '@/entities'
 import { DuplicationError, RequiredError, ValidationError } from '@/errors'
 import { I_Photo, T_File } from '@/models'
 import s3Service from '@/services/s3Service'
+import { createId } from '@/utils'
 
 import { getDuplicates, getHash } from './get'
 import { createContentHash, createSizeVariants } from './utils'
@@ -45,11 +46,15 @@ export const addOne = async (args: {
 
   const fileBuffer = fs.readFileSync(file.path)
   const contentHash = await createContentHash({ fileBuffer })
+  const timestamp = new Date()
 
   let photo = makePhoto({
     contentHash,
+    createdAt: timestamp,
     description: description,
+    id: createId(),
     name: name,
+    updatedAt: timestamp,
   })
 
   if (await getHash(photo)) {
