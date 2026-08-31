@@ -2,7 +2,7 @@ import './styles/main.css'
 
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-import { VueQueryPlugin } from 'vue-query'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 
 import { mainRouter } from '@/routes'
 import { authService } from '@/services'
