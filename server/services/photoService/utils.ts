@@ -1,7 +1,19 @@
+import Jimp from 'jimp'
 import sharp from 'sharp'
 
 import { SIZES_CONFIG } from '@/constants'
 import { T_PhotoSizes } from '@/models'
+
+/** Perceptual hash, so two visually identical images produce the same value. */
+export async function createContentHash(args: {
+  fileBuffer: Buffer
+}) {
+  const { fileBuffer } = args
+
+  const image = await Jimp.read(fileBuffer)
+
+  return image.hash()
+}
 
 export async function createSizeVariants(args: {
   fileBuffer: Buffer

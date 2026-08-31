@@ -1,0 +1,228 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`photos routes DELETE /photos/:id answers 404 when no photo matches 1`] = `
+{
+  "errors": [
+    {
+      "code": "PAE-3",
+      "detail": "Photo does not exist.",
+      "meta": {
+        "about": "photosapp.com/errors/PAE-3",
+      },
+      "title": "NotFoundError",
+    },
+  ],
+}
+`;
+
+exports[`photos routes DELETE /photos/:id deletes the photo, its hash record and its S3 objects 1`] = `
+{
+  "data": {
+    "attributes": {
+      "contentHash": "8lkeAK5d1x2",
+      "createdAt": "2023-01-01T00:00:00.000Z",
+      "description": "A test photo",
+      "isArchived": false,
+      "largestSizeAvailable": "sm",
+      "name": "Test photo",
+      "updatedAt": "2023-01-02T00:00:00.000Z",
+    },
+    "id": "ctest0000000000000000001",
+    "type": "photo",
+  },
+  "jsonapi": {
+    "version": "1.0",
+  },
+}
+`;
+
+exports[`photos routes GET /photos serializes every photo with a top level count 1`] = `
+{
+  "data": [
+    {
+      "attributes": {
+        "contentHash": "8lkeAK5d1x2",
+        "createdAt": "2023-01-01T00:00:00.000Z",
+        "description": "A test photo",
+        "isArchived": false,
+        "largestSizeAvailable": "sm",
+        "name": "Test photo",
+        "updatedAt": "2023-01-02T00:00:00.000Z",
+      },
+      "id": "ctest0000000000000000001",
+      "type": "photo",
+    },
+    {
+      "attributes": {
+        "contentHash": "8lkeAK5d1x2",
+        "createdAt": "2023-01-01T00:00:00.000Z",
+        "description": "Another test photo",
+        "isArchived": false,
+        "largestSizeAvailable": "sm",
+        "name": "Another test photo",
+        "updatedAt": "2023-01-02T00:00:00.000Z",
+      },
+      "id": "ctest0000000000000000002",
+      "type": "photo",
+    },
+  ],
+  "jsonapi": {
+    "version": "1.0",
+  },
+  "meta": {
+    "count": 2,
+    "limit": 25,
+  },
+}
+`;
+
+exports[`photos routes GET /photos/:id answers 200 with a null resource when no photo matches 1`] = `
+{
+  "data": null,
+  "jsonapi": {
+    "version": "1.0",
+  },
+}
+`;
+
+exports[`photos routes GET /photos/:id serializes the photo 1`] = `
+{
+  "data": {
+    "attributes": {
+      "contentHash": "8lkeAK5d1x2",
+      "createdAt": "2023-01-01T00:00:00.000Z",
+      "description": "A test photo",
+      "isArchived": false,
+      "largestSizeAvailable": "sm",
+      "name": "Test photo",
+      "updatedAt": "2023-01-02T00:00:00.000Z",
+    },
+    "id": "ctest0000000000000000001",
+    "type": "photo",
+  },
+  "jsonapi": {
+    "version": "1.0",
+  },
+}
+`;
+
+exports[`photos routes PATCH /photos/:id answers 400 when newValues is missing 1`] = `
+{
+  "errors": [
+    {
+      "code": "PAE-2",
+      "detail": "Missing field: newValues. Received value: undefined",
+      "meta": {
+        "about": "photosapp.com/errors/PAE-2",
+        "fieldName": "newValues",
+      },
+      "title": "RequiredError",
+    },
+  ],
+}
+`;
+
+exports[`photos routes PATCH /photos/:id answers 409 when the old values are stale 1`] = `
+{
+  "errors": [
+    {
+      "code": "PAE-5",
+      "detail": "This photo has already been modified. Try again with new data for oldValues.",
+      "meta": {
+        "about": "photosapp.com/errors/PAE-5",
+        "resourceName": "photo",
+        "staleField": "oldValues",
+      },
+      "source": {
+        "pointer": "/oldValues/name",
+      },
+      "title": "StaleDataError",
+    },
+  ],
+}
+`;
+
+exports[`photos routes PATCH /photos/:id updates the photo and serializes the result 1`] = `
+{
+  "data": {
+    "attributes": {
+      "contentHash": "8lkeAK5d1x2",
+      "createdAt": "2023-01-01T00:00:00.000Z",
+      "description": "A test photo",
+      "isArchived": false,
+      "largestSizeAvailable": "sm",
+      "name": "A new name",
+      "updatedAt": "2023-01-02T00:00:00.000Z",
+    },
+    "id": "ctest0000000000000000001",
+    "type": "photo",
+  },
+  "jsonapi": {
+    "version": "1.0",
+  },
+}
+`;
+
+exports[`photos routes POST /photos answers 400 when the upload is missing 1`] = `
+{
+  "errors": [
+    {
+      "code": "PAE-2",
+      "detail": "Missing field: photoFile. Received value: undefined",
+      "meta": {
+        "about": "photosapp.com/errors/PAE-2",
+        "fieldName": "photoFile",
+      },
+      "title": "RequiredError",
+    },
+  ],
+}
+`;
+
+exports[`photos routes POST /photos answers 400 with the duplicates when the content hash already exists 1`] = `
+{
+  "errors": [
+    {
+      "code": "PAE-4",
+      "detail": "Photo already exists",
+      "meta": {
+        "about": "photosapp.com/errors/PAE-4",
+        "duplicatePhotos": [
+          {
+            "contentHash": "8lkeAK5d1x2",
+            "createdAt": "2023-01-01T00:00:00.000Z",
+            "description": "A test photo",
+            "id": "ctest0000000000000000001",
+            "isArchived": false,
+            "largestSizeAvailable": "sm",
+            "name": "Test photo",
+            "updatedAt": "2023-01-02T00:00:00.000Z",
+          },
+        ],
+      },
+      "title": "DuplicationError",
+    },
+  ],
+}
+`;
+
+exports[`photos routes POST /photos hashes the upload, stores every size variant and creates the photo 1`] = `
+{
+  "data": {
+    "attributes": {
+      "contentHash": "8lkeAK5d1x2",
+      "createdAt": "2023-01-01T00:00:00.000Z",
+      "description": "A test photo",
+      "isArchived": false,
+      "largestSizeAvailable": "sm",
+      "name": "Test photo",
+      "updatedAt": "2023-01-02T00:00:00.000Z",
+    },
+    "id": "ctest0000000000000000001",
+    "type": "photo",
+  },
+  "jsonapi": {
+    "version": "1.0",
+  },
+}
+`;

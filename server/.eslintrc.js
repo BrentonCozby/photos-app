@@ -34,4 +34,13 @@ module.exports = {
       'ignores': ['modules'],
     }],
   },
+
+  overrides: [
+    {
+      files: ['**/*.spec.ts', '**/__mocks__/**/*.ts'],
+      rules: {
+        'node/no-unpublished-import': 'off',
+      },
+    },
+  ],
 }

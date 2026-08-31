@@ -1,5 +1,6 @@
 import express, { Express } from 'express'
 
+export * from './photoRepository'
 export * from '@/../models'
 
 export type T_ExpressHandler = express.Handler

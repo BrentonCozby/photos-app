@@ -1,15 +1,17 @@
 import express from 'express'
 
-import * as photos from '@/controllers/photos'
+import { I_PhotoControllerDeps, makePhotoControllers } from '@/controllers'
 
-const mainRouter = express.Router()
+export function makeMainRouter(deps: I_PhotoControllerDeps) {
+  const photos = makePhotoControllers(deps)
 
-mainRouter.get('/photos', photos.getMany)
-mainRouter.get('/photos/:id', photos.getOne)
-mainRouter.post('/photos', photos.postOne)
-mainRouter.patch('/photos/:id', photos.patchOne)
-mainRouter.delete('/photos/:id', photos.deleteOne)
+  const mainRouter = express.Router()
 
-export {
-  mainRouter,
+  mainRouter.get('/photos', photos.getMany)
+  mainRouter.get('/photos/:id', photos.getOne)
+  mainRouter.post('/photos', photos.postOne)
+  mainRouter.patch('/photos/:id', photos.patchOne)
+  mainRouter.delete('/photos/:id', photos.deleteOne)
+
+  return mainRouter
 }
