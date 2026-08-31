@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { defineConfig } from 'vite'
-const dotenvFlow = require('dotenv-flow')
 import vue from '@vitejs/plugin-vue'
-const path = require('path')
+import dotenvFlow from 'dotenv-flow'
+import path from 'path'
+import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default () => {

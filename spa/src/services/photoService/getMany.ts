@@ -4,7 +4,7 @@ import { PhotoSerializer } from '@/serializers'
 import { photosHttp } from './base'
 
 export async function getMany(args?: {
-  params?: {[key: string]: any}
+  params?: { [key: string]: any }
 }) {
   const {
     params,
