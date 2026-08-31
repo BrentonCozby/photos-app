@@ -1,18 +1,13 @@
-import makeDeleteOne from './deleteOne'
-import makeGetMany from './getMany'
-import makeGetOne from './getOne'
-import makePatchOne from './patchOne'
-import makePostOne from './postOne'
-import { I_PhotoControllerDeps } from './types'
+import deleteOne from './deleteOne'
+import getMany from './getMany'
+import getOne from './getOne'
+import patchOne from './patchOne'
+import postOne from './postOne'
 
-export type { I_PhotoControllerDeps } from './types'
-
-export function makePhotoControllers(deps: I_PhotoControllerDeps) {
-  return {
-    deleteOne: makeDeleteOne(deps),
-    getMany: makeGetMany(deps),
-    getOne: makeGetOne(deps),
-    patchOne: makePatchOne(deps),
-    postOne: makePostOne(deps),
-  }
+export {
+  deleteOne,
+  getMany,
+  getOne,
+  patchOne,
+  postOne,
 }

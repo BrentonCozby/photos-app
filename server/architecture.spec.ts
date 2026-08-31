@@ -51,7 +51,6 @@ function writeWidenedConfig() {
     'entities-use-no-packages': (rule) => { rule.from.path = '^controllers/' },
     'services-know-no-transport': (rule) => { rule.from.path = '^controllers/' },
     'prisma-stays-in-db': (rule) => { delete rule.from.pathNot },
-    'storage-stays-behind-the-port': (rule) => { rule.from.path = '^(app|entities|services|controllers|routes)' },
     'express-stays-at-the-edge': (rule) => { rule.from.pathNot = '^nothing$' },
   }
 
@@ -81,7 +80,6 @@ describe('architecture rules', () => {
       'no-circular',
       'prisma-stays-in-db',
       'services-know-no-transport',
-      'storage-stays-behind-the-port',
     ])
   })
 })

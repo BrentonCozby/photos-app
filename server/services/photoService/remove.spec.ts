@@ -1,7 +1,16 @@
-import { I_Photo, I_PhotoRepository } from '@/models'
+import { photoRepository } from '@/db'
+import { I_Photo } from '@/models'
 import s3Service from '@/services/s3Service'
 
-import { makeRemoveOne } from './remove'
+import { removeOne } from './remove'
+
+jest.mock('@/db', () => ({
+  photoRepository: {
+    deletePhotoAndUnusedHash: jest.fn(),
+    findHashWithPhotoCount: jest.fn(),
+    findPhotoById: jest.fn(),
+  },
+}))
 
 jest.mock('@/services/s3Service', () => ({
   __esModule: true,
@@ -13,6 +22,7 @@ jest.mock('@/services/s3Service', () => ({
   },
 }))
 
+const mockPhotoRepository = jest.mocked(photoRepository)
 const mockS3Service = jest.mocked(s3Service)
 
 const CONTENT_HASH = '8lkeAK5d1x2'
@@ -34,34 +44,19 @@ const sharedS3Keys = [
   `photos/${CONTENT_HASH}-sm.webp`,
 ]
 
-function makeFakeRepository(isHashRemoved: boolean) {
-  const photoRepository: I_PhotoRepository = {
-    createHash: jest.fn(),
-    createPhoto: jest.fn(),
-    deletePhotoAndUnusedHash: jest.fn(async () => ({ isHashRemoved })),
-    findHash: jest.fn(),
-    findHashWithPhotoCount: jest.fn(async () => ({ hash: CONTENT_HASH, photoCount: 1 })),
-    findPhotoById: jest.fn(async () => photo),
-    findPhotos: jest.fn(),
-    findPhotosByContentHash: jest.fn(),
-    updatePhoto: jest.fn(),
-  }
-
-  return photoRepository
-}
-
 describe('removeOne', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockPhotoRepository.findPhotoById.mockResolvedValue(photo)
+    mockPhotoRepository.findHashWithPhotoCount.mockResolvedValue({ hash: CONTENT_HASH, photoCount: 1 })
   })
 
   it('deletes the S3 objects when the last photo using the hash goes', async () => {
-    const photoRepository = makeFakeRepository(true)
-    const removeOne = makeRemoveOne({ photoRepository })
+    mockPhotoRepository.deletePhotoAndUnusedHash.mockResolvedValue({ isHashRemoved: true })
 
     await removeOne({ id: photo.id })
 
-    expect(photoRepository.deletePhotoAndUnusedHash).toHaveBeenCalledWith({
+    expect(mockPhotoRepository.deletePhotoAndUnusedHash).toHaveBeenCalledWith({
       id: photo.id,
       contentHash: CONTENT_HASH,
     })
@@ -69,12 +64,11 @@ describe('removeOne', () => {
   })
 
   it('leaves the S3 objects alone when a duplicate photo still shares the content hash', async () => {
-    const photoRepository = makeFakeRepository(false)
-    const removeOne = makeRemoveOne({ photoRepository })
+    mockPhotoRepository.deletePhotoAndUnusedHash.mockResolvedValue({ isHashRemoved: false })
 
     await removeOne({ id: photo.id })
 
-    expect(photoRepository.deletePhotoAndUnusedHash).toHaveBeenCalled()
+    expect(mockPhotoRepository.deletePhotoAndUnusedHash).toHaveBeenCalled()
     expect(mockS3Service.deleteObjects).not.toHaveBeenCalled()
   })
 })
