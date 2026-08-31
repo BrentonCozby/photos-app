@@ -26,7 +26,7 @@ async function main() {
   const stoppableHttpServer = stoppable(httpServer, SERVER_CLOSE_GRACE)
   const serverClose = promisify(stoppableHttpServer.stop.bind(stoppableHttpServer))
 
-  const shutdownMessages: {[key: string]: string} = {
+  const shutdownMessages: { [key: string]: string } = {
     SIGINT: 'Received SIGINT, probably ctrl-c. Gracefully shutting down the server.',
     SIGTERM: 'Received SIGTERM, probably docker stop. Gracefully shutting down the server.',
   }

@@ -1,4 +1,4 @@
-import Jimp from 'jimp'
+import { Jimp } from 'jimp'
 import sharp from 'sharp'
 
 import { SIZES_CONFIG } from '@/constants'

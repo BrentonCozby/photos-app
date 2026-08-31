@@ -48,13 +48,13 @@ module.exports = {
     },
     {
       name: 'prisma-stays-in-db',
-      comment: 'The ORM lives behind the repository port. This is the rule that catches a service importing the Prisma client.',
+      comment: 'The ORM lives behind the repository port. This is the rule that catches a service importing the Prisma client. prisma.config.ts is CLI configuration rather than application code.',
       severity: 'error',
       from: {
-        pathNot: '^db/',
+        pathNot: '^db/|^prisma[.]config[.]ts$',
       },
       to: {
-        path: 'node_modules/(@prisma/client|[.]prisma/client)',
+        path: 'node_modules/(@prisma/|prisma/|[.]prisma/)',
       },
     },
     {

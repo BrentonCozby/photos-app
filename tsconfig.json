@@ -6,14 +6,19 @@
       "ESNext"
     ],
     "types": [
-      "Node"
+      "node"
     ],
     "noEmit": true,
     "importHelpers": true,
-    "moduleResolution": "Node",
+    // node10 resolution and baseUrl are deprecated in 6.0 and removed in 7.0.
+    // tsconfig-paths reads baseUrl at runtime, so both stay until that is replaced.
+    "ignoreDeprecations": "6.0",
+    "moduleResolution": "node10",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
+    // jimp ships its type declarations for node16 resolution only.
+    "skipLibCheck": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "noErrorTruncation": true,
