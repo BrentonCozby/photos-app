@@ -27,21 +27,46 @@ export function makePhotoRepository(): I_PhotoRepository {
       })
     },
 
-    async deleteHash({ contentHash }) {
-      await prisma.photoHash.delete({
-        where: {
-          hash: contentHash,
-        },
-      })
-    },
-
-    async deletePhoto({ id }) {
+    async deletePhotoAndUnusedHash({ id, contentHash }) {
       try {
-        await prisma.photo.delete({
-          where: {
-            id: id,
-          },
+        // The delete, the recount and the hash delete have to see one another, or
+        // two concurrent deletes of the last two photos both read a count of zero.
+        const isHashRemoved = await prisma.$transaction(async (client) => {
+          await client.photo.delete({
+            where: {
+              id: id,
+            },
+          })
+
+          const remaining = await client.photo.count({
+            where: {
+              contentHash: contentHash,
+            },
+          })
+
+          if (remaining > 0) {
+            return false
+          }
+
+          try {
+            await client.photoHash.delete({
+              where: {
+                hash: contentHash,
+              },
+            })
+          } catch (error) {
+            // Another delete removed the hash record first, so it owns the cleanup.
+            if (isRecordNotFound(error)) {
+              return false
+            }
+
+            throw error
+          }
+
+          return true
         })
+
+        return { isHashRemoved }
       } catch (error) {
         if (isRecordNotFound(error)) {
           throw new NotFoundError({ message: 'Photo does not exist.' })

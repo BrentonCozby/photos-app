@@ -25,6 +25,8 @@ jest.mock('@/services/s3Service', () => ({
 
 // jest.mock swaps in db/__mocks__/prisma.ts; requireMock returns that same instance.
 const { prisma: mockPrisma } = jest.requireMock<typeof import('@/db/__mocks__/prisma')>('@/db/prisma')
+
+type T_TransactionCallback = import('@/db/__mocks__/prisma').T_TransactionCallback
 const mockS3Service = jest.mocked(s3Service)
 
 const TEST_PHOTO_PATH = path.resolve(__dirname, '..', 'entities', 'test-photo.jpg')
@@ -59,6 +61,7 @@ describe('photos routes', () => {
 
   beforeEach(() => {
     jest.resetAllMocks()
+    mockPrisma.$transaction.mockImplementation((run: T_TransactionCallback) => run(mockPrisma))
   })
 
   describe('GET /photos', () => {
@@ -142,9 +145,8 @@ describe('photos routes', () => {
   describe('DELETE /photos/:id', () => {
     it('deletes the photo, its hash record and its S3 objects', async () => {
       mockPrisma.photo.findUnique.mockResolvedValue(photoRow)
-      mockPrisma.photoHash.findUnique
-        .mockResolvedValueOnce({ hash: TEST_PHOTO_HASH, _count: { photos: 1 } })
-        .mockResolvedValueOnce({ hash: TEST_PHOTO_HASH, _count: { photos: 0 } })
+      mockPrisma.photoHash.findUnique.mockResolvedValue({ hash: TEST_PHOTO_HASH, _count: { photos: 1 } })
+      mockPrisma.photo.count.mockResolvedValue(0)
 
       const response = await request(app).delete(`/photos/${photoRow.id}`)
 

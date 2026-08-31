@@ -34,16 +34,13 @@ const sharedS3Keys = [
   `photos/${CONTENT_HASH}-sm.webp`,
 ]
 
-function makeFakeRepository(photoCounts: number[]) {
-  const counts = [...photoCounts]
-
+function makeFakeRepository(isHashRemoved: boolean) {
   const photoRepository: I_PhotoRepository = {
     createHash: jest.fn(),
     createPhoto: jest.fn(),
-    deleteHash: jest.fn(),
-    deletePhoto: jest.fn(),
+    deletePhotoAndUnusedHash: jest.fn(async () => ({ isHashRemoved })),
     findHash: jest.fn(),
-    findHashWithPhotoCount: jest.fn(async () => ({ hash: CONTENT_HASH, photoCount: counts.shift() ?? 0 })),
+    findHashWithPhotoCount: jest.fn(async () => ({ hash: CONTENT_HASH, photoCount: 1 })),
     findPhotoById: jest.fn(async () => photo),
     findPhotos: jest.fn(),
     findPhotosByContentHash: jest.fn(),
@@ -58,25 +55,26 @@ describe('removeOne', () => {
     jest.clearAllMocks()
   })
 
-  it('deletes the hash record and the S3 objects when the last photo using the hash goes', async () => {
-    const photoRepository = makeFakeRepository([1, 0])
+  it('deletes the S3 objects when the last photo using the hash goes', async () => {
+    const photoRepository = makeFakeRepository(true)
     const removeOne = makeRemoveOne({ photoRepository })
 
     await removeOne({ id: photo.id })
 
-    expect(photoRepository.deletePhoto).toHaveBeenCalledWith({ id: photo.id })
-    expect(photoRepository.deleteHash).toHaveBeenCalledWith({ contentHash: CONTENT_HASH })
+    expect(photoRepository.deletePhotoAndUnusedHash).toHaveBeenCalledWith({
+      id: photo.id,
+      contentHash: CONTENT_HASH,
+    })
     expect(mockS3Service.deleteObjects).toHaveBeenCalledWith({ keys: sharedS3Keys })
   })
 
   it('leaves the S3 objects alone when a duplicate photo still shares the content hash', async () => {
-    const photoRepository = makeFakeRepository([2, 1])
+    const photoRepository = makeFakeRepository(false)
     const removeOne = makeRemoveOne({ photoRepository })
 
     await removeOne({ id: photo.id })
 
-    expect(photoRepository.deletePhoto).toHaveBeenCalledWith({ id: photo.id })
-    expect(photoRepository.deleteHash).not.toHaveBeenCalled()
+    expect(photoRepository.deletePhotoAndUnusedHash).toHaveBeenCalled()
     expect(mockS3Service.deleteObjects).not.toHaveBeenCalled()
   })
 })
