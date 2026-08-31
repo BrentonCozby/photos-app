@@ -30,6 +30,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Check the types
+        run: npm run check:types
+
       - name: Check the architecture boundaries
         run: npm run check:arch
 
