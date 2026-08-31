@@ -17,7 +17,7 @@ export interface I_HttpRequest<B = any> {
   file?: T_File
   files?: T_File[] | { [fieldname: string]: T_File[] }
   headers: I_HttpHeaders
-  ip: string
+  ip?: string
   method: string
   path: string
   pathParams: Record<string, string>

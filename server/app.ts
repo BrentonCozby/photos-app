@@ -1,5 +1,3 @@
-import 'express-async-errors'
-
 import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
@@ -28,7 +26,7 @@ async function createApp() {
   if (IS_PROD) {
     app.use(express.static(path.resolve(__dirname, '..', 'spa', 'dist')))
 
-    app.get('*', (req, res) => {
+    app.get('/*splat', (req, res) => {
       res.sendFile(path.resolve(__dirname, '..', '..', 'spa', 'dist', 'index.html'))
     })
   } // else, let Vite serve the SPA

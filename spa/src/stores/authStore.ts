@@ -25,12 +25,13 @@ export const useAuthStore = defineStore('auth', () => {
 authService.listen((newState) => {
   const authStore = useAuthStore()
 
-  authStore.$patch({
-    isLoading: newState.isLoading,
-    isAuthenticated: newState.isAuthenticated,
-    error: newState.error,
-    accessToken: newState.accessToken,
-    userInfo: newState.userInfo,
-    idClaims: newState.idClaims,
+  // The object form of $patch cannot express an Error, whose cause is unknown.
+  authStore.$patch((state) => {
+    state.isLoading = newState.isLoading
+    state.isAuthenticated = newState.isAuthenticated
+    state.error = newState.error
+    state.accessToken = newState.accessToken
+    state.userInfo = newState.userInfo
+    state.idClaims = newState.idClaims
   })
 }, 'useAuthStore')

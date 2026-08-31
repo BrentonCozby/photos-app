@@ -11,7 +11,7 @@ import { useAuthStore } from '@/stores'
  */
 export const usePhotosQuery = (args?: {
   id?: string
-  params?: {[key: string]: any}
+  params?: { [key: string]: any }
 }) => {
   const { id, params } = args || {}
   const authStore = useAuthStore()

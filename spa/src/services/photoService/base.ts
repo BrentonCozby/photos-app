@@ -14,10 +14,7 @@ export const photosHttp = createHttpInstance({
 
 photosHttp.interceptors.request.use(async (config) => {
   if (config.accessToken) {
-    config.headers = {
-      ...config.headers,
-      Authorization: `Bearer ${config.accessToken}`,
-    }
+    config.headers.set('Authorization', `Bearer ${config.accessToken}`)
   }
 
   return config

@@ -1,20 +1,33 @@
 import { I_HttpRequest, T_Controller, T_ErrorController, T_ExpressErrorHandler, T_ExpressHandler } from '@/models'
 
+type T_ExpressRequest = Parameters<T_ExpressHandler>[0]
+
+function toHttpRequest(req: T_ExpressRequest): I_HttpRequest {
+  const pathParams: I_HttpRequest['pathParams'] = {}
+
+  for (const [name, value] of Object.entries(req.params)) {
+    // A wildcard route matches several segments, so rejoin them into one path.
+    pathParams[name] = Array.isArray(value) ? value.join('/') : value
+  }
+
+  return {
+    body: req.body,
+    file: req.file,
+    files: req.files,
+    query: req.query,
+    pathParams,
+    ip: req.ip,
+    method: req.method,
+    path: req.path,
+    headers: req.headers,
+  }
+}
+
 type toExpressHandlerType = (controller: T_Controller) => T_ExpressHandler
 
 export const toExpressHandler: toExpressHandlerType = (controller) => {
   return async (req, res, next) => {
-    const httpRequest: I_HttpRequest = {
-      body: req.body,
-      file: req.file,
-      files: req.files,
-      query: req.query,
-      pathParams: req.params,
-      ip: req.ip,
-      method: req.method,
-      path: req.path,
-      headers: req.headers,
-    }
+    const httpRequest = toHttpRequest(req)
 
     let httpResponse
 
@@ -39,17 +52,7 @@ type toExpressErrorHandlerType = (controller: T_ErrorController) => T_ExpressErr
 
 export const toExpressErrorHandler: toExpressErrorHandlerType = (controller) => {
   return async (err, req, res, next) => {
-    const httpRequest: I_HttpRequest = {
-      body: req.body,
-      file: req.file,
-      files: req.files,
-      query: req.query,
-      pathParams: req.params,
-      ip: req.ip,
-      method: req.method,
-      path: req.path,
-      headers: req.headers,
-    }
+    const httpRequest = toHttpRequest(req)
 
     let httpResponse
 

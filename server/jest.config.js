@@ -7,11 +7,6 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/$1',
   },
   transform: {
-    '^.+\\.ts?': 'ts-jest',
-  },
-  globals: {
-    'ts-jest': {
-      diagnostics: false,
-    },
+    '^.+\\.ts?': ['ts-jest', { diagnostics: false }],
   },
 }

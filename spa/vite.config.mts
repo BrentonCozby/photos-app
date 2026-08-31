@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { defineConfig } from 'vite'
-const dotenvFlow = require('dotenv-flow')
 import vue from '@vitejs/plugin-vue'
-const path = require('path')
+import dotenvFlow from 'dotenv-flow'
+import path from 'path'
+import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default () => {
@@ -23,14 +22,13 @@ export default () => {
 
     server: {
       host: true,
-      // @ts-expect-error "need to install @types/node"
-      port: process.env.SPA_PORT,
+      port: Number(process.env.SPA_PORT) || undefined,
     },
 
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
-        '@root': path.resolve(__dirname),
+        '@': path.resolve(import.meta.dirname, 'src'),
+        '@root': path.resolve(import.meta.dirname),
       },
     },
   })
