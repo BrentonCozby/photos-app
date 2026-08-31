@@ -118,4 +118,35 @@ module.exports = tseslint.config(
       }],
     },
   },
+
+  {
+    files: ['server/entities/**/*.ts', 'server/services/**/*.ts'],
+    ignores: ['server/**/*.spec.ts'],
+
+    rules: {
+      'no-restricted-properties': ['error', {
+        object: 'process',
+        property: 'env',
+        message: 'Read configuration through server/constants, so one file names every variable.',
+      }],
+    },
+  },
+
+  {
+    // An entity that reads the clock or invents an id answers differently for the
+    // same inputs, which is the property makePhoto's caller relies on.
+    files: ['server/entities/**/*.ts'],
+    ignores: ['server/**/*.spec.ts'],
+
+    rules: {
+      'no-restricted-globals': ['error', 'Date', 'Math'],
+      'no-restricted-imports': ['error', {
+        paths: [{
+          name: '@/utils',
+          importNames: ['createId'],
+          message: 'The caller supplies the id, so the entity stays deterministic.',
+        }],
+      }],
+    },
+  },
 )

@@ -5,7 +5,7 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3'
 
-import { MAIN_BUCKET } from '@/constants'
+import { AWS_S3_ACCESS_KEY_ID, AWS_S3_REGION, AWS_S3_SECRET_ACCESS_KEY, MAIN_BUCKET } from '@/constants'
 import { RequiredError } from '@/errors'
 
 let client: S3Client
@@ -14,10 +14,10 @@ export function getClient() {
   if (!client) {
     client = new S3Client({
       credentials: {
-        accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY || '',
+        accessKeyId: AWS_S3_ACCESS_KEY_ID,
+        secretAccessKey: AWS_S3_SECRET_ACCESS_KEY,
       },
-      region: process.env.AWS_S3_REGION || '',
+      region: AWS_S3_REGION,
     })
   }
 
