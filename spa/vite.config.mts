@@ -22,14 +22,13 @@ export default () => {
 
     server: {
       host: true,
-      // @ts-expect-error "need to install @types/node"
-      port: process.env.SPA_PORT,
+      port: Number(process.env.SPA_PORT) || undefined,
     },
 
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
-        '@root': path.resolve(__dirname),
+        '@': path.resolve(import.meta.dirname, 'src'),
+        '@root': path.resolve(import.meta.dirname),
       },
     },
   })

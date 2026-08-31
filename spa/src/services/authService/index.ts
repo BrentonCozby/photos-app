@@ -123,7 +123,7 @@ async function login() {
 
   setState({ isLoading: true })
 
-  return auth0.loginWithRedirect({ screen_hint: 'login' })
+  return auth0.loginWithRedirect({ authorizationParams: { screen_hint: 'login' } })
 }
 
 async function signup() {
@@ -133,7 +133,7 @@ async function signup() {
 
   setState({ isLoading: true })
 
-  return auth0.loginWithRedirect({ screen_hint: 'signup' })
+  return auth0.loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })
 }
 
 async function logout() {
@@ -146,7 +146,7 @@ async function logout() {
   const newState: Partial<I_AuthServiceState> = {}
 
   try {
-    await auth0.logout({ returnTo: window.location.origin })
+    await auth0.logout({ logoutParams: { returnTo: window.location.origin } })
 
     newState.isLoading = false
     newState.isAuthenticated = false

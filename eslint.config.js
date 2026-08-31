@@ -79,6 +79,16 @@ module.exports = tseslint.config(
   },
 
   {
+    files: ['spa/**/*.ts', 'spa/**/*.mts'],
+
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+
+  {
     files: ['server/**/*.ts'],
 
     ...n.configs['flat/recommended'],

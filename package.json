@@ -20,7 +20,7 @@
     "constants",
     "models",
     "httpStatuses.ts",
-    ".eslintrc.js",
+    "eslint.config.js",
     "tsconfig.json",
     ".env"
   ],
