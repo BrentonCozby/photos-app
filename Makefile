@@ -43,6 +43,11 @@ logs: ## Run the logs for all containers
 	@echo "Following all container logs..."
 	docker-compose logs -f --tail=100
 
+.PHONY: check-arch
+check-arch: ## Check the server's Clean Architecture boundaries
+	@echo "Checking Photos App architecture boundaries..."
+	docker-compose run --rm server sh -c 'npm run check:arch'
+
 .PHONY: lint
 lint: ## Lint everything
 	@echo "Linting Photos App..."

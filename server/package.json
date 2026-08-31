@@ -6,6 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production ts-node -r tsconfig-paths/register index.ts",
     "start:dev": "NODE_ENV=development nodemon --ext 'js,ts,json' --swc -r tsconfig-paths/register index.ts",
+    "check:arch": "depcruise . --config .dependency-cruiser.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "precommit": "npm run lint",
@@ -69,6 +70,7 @@
     "@types/supertest": "^7.2.1",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
+    "dependency-cruiser": "^13.1.5",
     "eslint": "^8.26.0",
     "eslint-plugin-node": "^11.1.0",
     "husky": "^8.0.1",
