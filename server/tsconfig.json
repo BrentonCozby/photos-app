@@ -2,6 +2,9 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
+    // The parent tsconfig lists only node, and replacing the array here is the
+    // only way to add jest without the SPA needing @types/jest too.
+    "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
