@@ -23,32 +23,33 @@ export const makeRemoveOne = (deps: I_PhotoServiceDeps) => {
       throw new NotFoundError({ message: 'Photo does not exist.' })
     }
 
-    let hashRecord = await photoRepository.findHashWithPhotoCount({ contentHash: photo.contentHash })
+    const hashRecord = await photoRepository.findHashWithPhotoCount({ contentHash: photo.contentHash })
 
     if (!hashRecord) {
       throw new NotFoundError({ message: `PhotoHash record not found for photo id: ${photo.id}` })
     }
 
-    await photoRepository.deletePhoto({ id })
-
-    hashRecord = await photoRepository.findHashWithPhotoCount({ contentHash: photo.contentHash })
-
-    if (hashRecord?.photoCount === 0) {
-      await photoRepository.deleteHash({ contentHash: photo.contentHash })
-    }
-
-    const largestSizeConfig = SIZES_CONFIG[photo.largestSizeAvailable as keyof typeof SIZES_CONFIG]
-    const sizes = Object.entries(SIZES_CONFIG).reduce((acc, [size, config]) => {
-      if (config.width <= largestSizeConfig.width && config.height <= largestSizeConfig.height) {
-        acc.push(size as T_PhotoSizes)
-      }
-
-      return acc
-    }, [] as T_PhotoSizes[])
-
-    s3Service.deleteObjects({
-      keys: sizes.map((size) => `${PHOTOS_FILEPATH_BASE}/${photo.contentHash}-${size}.webp`),
+    const { isHashRemoved } = await photoRepository.deletePhotoAndUnusedHash({
+      id,
+      contentHash: photo.contentHash,
     })
+
+    // S3 keys come from the content hash, so duplicates share their objects. Only the
+    // photo that took the hash record with it may delete them.
+    if (isHashRemoved) {
+      const largestSizeConfig = SIZES_CONFIG[photo.largestSizeAvailable as keyof typeof SIZES_CONFIG]
+      const sizes = Object.entries(SIZES_CONFIG).reduce((acc, [size, config]) => {
+        if (config.width <= largestSizeConfig.width && config.height <= largestSizeConfig.height) {
+          acc.push(size as T_PhotoSizes)
+        }
+
+        return acc
+      }, [] as T_PhotoSizes[])
+
+      s3Service.deleteObjects({
+        keys: sizes.map((size) => `${PHOTOS_FILEPATH_BASE}/${photo.contentHash}-${size}.webp`),
+      })
+    }
 
     return photo
   }
