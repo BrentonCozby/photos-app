@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+import { makeAdapter } from './adapter'
+
+const prisma = new PrismaClient({ adapter: makeAdapter() })
 
 export {
   prisma,
