@@ -33,22 +33,24 @@ export const makeRemoveOne = (deps: I_PhotoServiceDeps) => {
 
     hashRecord = await photoRepository.findHashWithPhotoCount({ contentHash: photo.contentHash })
 
+    // S3 keys come from the content hash, so duplicates share their objects. Only the
+    // photo that takes the hash record with it may delete them.
     if (hashRecord?.photoCount === 0) {
       await photoRepository.deleteHash({ contentHash: photo.contentHash })
+
+      const largestSizeConfig = SIZES_CONFIG[photo.largestSizeAvailable as keyof typeof SIZES_CONFIG]
+      const sizes = Object.entries(SIZES_CONFIG).reduce((acc, [size, config]) => {
+        if (config.width <= largestSizeConfig.width && config.height <= largestSizeConfig.height) {
+          acc.push(size as T_PhotoSizes)
+        }
+
+        return acc
+      }, [] as T_PhotoSizes[])
+
+      s3Service.deleteObjects({
+        keys: sizes.map((size) => `${PHOTOS_FILEPATH_BASE}/${photo.contentHash}-${size}.webp`),
+      })
     }
-
-    const largestSizeConfig = SIZES_CONFIG[photo.largestSizeAvailable as keyof typeof SIZES_CONFIG]
-    const sizes = Object.entries(SIZES_CONFIG).reduce((acc, [size, config]) => {
-      if (config.width <= largestSizeConfig.width && config.height <= largestSizeConfig.height) {
-        acc.push(size as T_PhotoSizes)
-      }
-
-      return acc
-    }, [] as T_PhotoSizes[])
-
-    s3Service.deleteObjects({
-      keys: sizes.map((size) => `${PHOTOS_FILEPATH_BASE}/${photo.contentHash}-${size}.webp`),
-    })
 
     return photo
   }
