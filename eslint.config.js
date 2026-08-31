@@ -105,4 +105,17 @@ module.exports = tseslint.config(
       }],
     },
   },
+
+  {
+    // dependency-cruiser sees imports. An ORM error code is a string, so it does not.
+    files: ['server/**/*.ts'],
+    ignores: ['server/db/**'],
+
+    rules: {
+      'no-restricted-syntax': ['error', {
+        selector: 'Literal[value=/^P[0-9]{4}$/]',
+        message: 'Prisma error codes belong in server/db, behind the repository port.',
+      }],
+    },
+  },
 )
