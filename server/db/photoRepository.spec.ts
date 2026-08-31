@@ -15,7 +15,10 @@ const CONTENT_HASH = '8lkeAK5d1x2'
 const PHOTO_ID = 'ctest0000000000000000001'
 
 function recordNotFoundError() {
-  return new Prisma.PrismaClientKnownRequestError('Record to delete does not exist.', 'P2025', '4.5.0')
+  return new Prisma.PrismaClientKnownRequestError('Record to delete does not exist.', {
+    code: 'P2025',
+    clientVersion: '7.10.0',
+  })
 }
 
 const photoRepository = makePhotoRepository()
