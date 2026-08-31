@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/vue-query'
 import { computed } from 'vue'
-import { useQuery, UseQueryOptions } from 'vue-query'
 
 import { I_Photo } from '@/models'
 import * as PhotoService from '@/services/photoService'
@@ -15,13 +15,8 @@ export const usePhotosQuery = (args?: {
 }) => {
   const { id, params } = args || {}
   const authStore = useAuthStore()
-  const queryKey = ['photos', id]
 
-  const queryOptions: UseQueryOptions<I_Photo[]> = {
-    enabled: computed(() => authStore.isAuthenticated),
-  }
-
-  async function queryFunction() {
+  async function queryFunction(): Promise<I_Photo[]> {
     if (id) {
       const photo = await PhotoService.getOne({ id })
 
@@ -31,5 +26,9 @@ export const usePhotosQuery = (args?: {
     return PhotoService.getMany({ params })
   }
 
-  return useQuery<I_Photo[]>(queryKey, queryFunction, queryOptions)
+  return useQuery({
+    queryKey: ['photos', id],
+    queryFn: queryFunction,
+    enabled: computed(() => authStore.isAuthenticated),
+  })
 }

@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from 'vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 
 import { I_PhotoUpdate } from '@/models'
 import * as PhotoService from '@/services/photoService'
@@ -18,9 +18,10 @@ export const useUpdatePhotoMutation = () => {
     return PhotoService.patchOne({ photoData })
   }
 
-  return useMutation(mutationFunction, {
+  return useMutation({
+    mutationFn: mutationFunction,
     onSuccess() {
-      queryClient.invalidateQueries('photos')
+      queryClient.invalidateQueries({ queryKey: ['photos'] })
     },
   })
 }

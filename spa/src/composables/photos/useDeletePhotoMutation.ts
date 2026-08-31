@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from 'vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 
 import { I_Photo } from '@/models'
 import * as PhotoService from '@/services/photoService'
@@ -18,9 +18,10 @@ export const useDeletePhotoMutation = () => {
     return PhotoService.deleteOne({ id })
   }
 
-  return useMutation(mutationFunction, {
+  return useMutation({
+    mutationFn: mutationFunction,
     onSuccess() {
-      queryClient.invalidateQueries('photos')
+      queryClient.invalidateQueries({ queryKey: ['photos'] })
     },
   })
 }

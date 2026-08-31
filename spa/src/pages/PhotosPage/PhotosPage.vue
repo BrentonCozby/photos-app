@@ -22,7 +22,7 @@ async function onDeletePhoto(e: Event) {
   await deletePhotoMutation.mutate({ id: photoIdToDelete.value })
 
   photoIdToDelete.value = ''
-  createPhotoMutation.reset.value()
+  createPhotoMutation.reset()
 }
 
 async function onFileUpload(e: Event) {
@@ -77,7 +77,7 @@ async function onFileUpload(e: Event) {
     <div v-if="photosQuery.data.value?.length" class="mt-6">
       <form @submit="onDeletePhoto">
         <input v-model="photoIdToDelete" class="mr-2" />
-        <button type="submit" :disabled="deletePhotoMutation.isLoading.value">
+        <button type="submit" :disabled="deletePhotoMutation.isPending.value">
           Delete
         </button>
       </form>
@@ -88,7 +88,7 @@ async function onFileUpload(e: Event) {
   </div>
 
   <p v-if="photosQuery.isLoading.value">Loading photos...</p>
-  <p v-if="createPhotoMutation.isLoading.value">Adding photo...</p>
+  <p v-if="createPhotoMutation.isPending.value">Adding photo...</p>
 
   <div v-if="createPhotoMutation.error.value" class="text-red-500">
     <div>Failed to add photo:</div>
