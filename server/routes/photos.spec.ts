@@ -71,6 +71,22 @@ describe('photos routes', () => {
       expect(response.body).toMatchSnapshot()
       expect(mockPrisma.photo.findMany).toHaveBeenCalledWith({ take: 25 })
     })
+
+    // Helmet and cors set these, and a version bump can change the set without
+    // touching any response body.
+    it('sends the security headers', async () => {
+      mockPrisma.photo.findMany.mockResolvedValue([])
+
+      const response = await request(app).get('/photos')
+
+      const securityHeaders = Object.fromEntries(
+        Object.entries(response.headers)
+          .filter(([name]) => /^(access-control-|cross-origin-|origin-agent-cluster|referrer-policy|strict-transport-security|x-)/.test(name))
+          .sort(([a], [b]) => a.localeCompare(b)),
+      )
+
+      expect(securityHeaders).toMatchSnapshot()
+    })
   })
 
   describe('GET /photos/:id', () => {
